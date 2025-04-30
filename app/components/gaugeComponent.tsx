@@ -23,6 +23,7 @@ type defaultProps = {
     maxVal: number;
     needleSize: number;
 };
+// shared // shared
 type roundGaugeProps = {
     currentVal: number;
     fontWeight: number;
@@ -169,7 +170,7 @@ const GaugeComponent = ({
             case 'arc':
                 return <ArcGauge />;
             case 'round':
-                return <RoundGauge />;
+                return <RoundGauge currentVal={currentVal} />;
             case 'simple':
                 return <SimpleGauge />;
             default:
