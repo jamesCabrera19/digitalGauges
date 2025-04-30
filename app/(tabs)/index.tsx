@@ -43,24 +43,20 @@ const SensorContainer = () => {
 
     const Item: React.FC<{ name: string; val: number }> = ({ name, val }) => (
         <Pressable style={styles.item} onPress={() => onItemClick(val)}>
-            <Text style={{ fontSize: 20 }}>{name}</Text>
-            <Text style={{ fontSize: 50 }}>{val} </Text>
+            <Text style={{ fontSize: 20, color: "white" }}>{name}</Text>
+            <Text style={{ fontSize: 50, color: "white" }}>{val} </Text>
         </Pressable>
     );
     const styles = StyleSheet.create({
         container: {
-            // flex: 1,
             marginTop: StatusBar.currentHeight || 20,
-            borderWidth: 1,
             width: 300,
             borderRadius: 10,
-            backgroundColor: "#FFFF",
+            backgroundColor: "#292e34",
             height: 450,
-            // margin: 'auto',
-            // justifyContent: 'space-between',
         },
         item: {
-            backgroundColor: "#FFFFF0",
+            backgroundColor: "black",
             margin: 8,
             flex: 1,
             height: 150,
@@ -82,7 +78,7 @@ const SensorContainer = () => {
                     marginHorizontal: 10,
                 }}
             >
-                <Text style={{ fontSize: 30 }}>GAUGES</Text>
+                <Text style={{ fontSize: 30, color: "white" }}>GAUGES</Text>
                 <Button title="+" onPress={() => router.push("/gauges")} />
             </View>
 
@@ -101,10 +97,6 @@ const SensorContainer = () => {
 export default function Index() {
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.text}>Home screen</Text> */}
-            {/* <Link href="/about" style={styles.button}>
-                Go to About screen
-            </Link> */}
             <SensorContainer />
         </View>
     );

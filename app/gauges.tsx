@@ -504,11 +504,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#25292e",
     },
     screenContainer: {
         width: 300, // your fixed width
         justifyContent: "center", // center inner items vertically within this box
         alignItems: "center", // center inner items horizontally within this box
+        backgroundColor: "#292e34",
+        borderRadius: 10,
     },
     card: {
         width: 300,
