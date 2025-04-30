@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { Link } from "expo-router";
 import {
     View,
     FlatList,
@@ -7,30 +7,31 @@ import {
     StatusBar,
     Pressable,
     Button,
-} from 'react-native';
-import { ReactNode } from 'react';
-import { useRouter } from 'expo-router';
+} from "react-native";
+import { ReactNode } from "react";
+import { useRouter } from "expo-router";
+
 const SensorContainer = () => {
     const router = useRouter();
 
     const sensors = [
         {
-            name: 'coolant temp',
+            name: "coolant temp",
             id: 123,
             value: 180,
         },
         {
-            name: 'boost',
+            name: "boost",
             id: 1234,
             value: 10.4,
         },
         {
-            name: 'oil pressure',
+            name: "oil pressure",
             id: 123456,
             value: 42,
         },
         {
-            name: 'brake temp',
+            name: "brake temp",
             id: 123455556,
             value: 250,
         },
@@ -53,18 +54,18 @@ const SensorContainer = () => {
             borderWidth: 1,
             width: 300,
             borderRadius: 10,
-            backgroundColor: '#FFFF',
+            backgroundColor: "#FFFF",
             height: 450,
             // margin: 'auto',
             // justifyContent: 'space-between',
         },
         item: {
-            backgroundColor: '#FFFFF0',
+            backgroundColor: "#FFFFF0",
             margin: 8,
             flex: 1,
             height: 150,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 8,
         },
         title: {
@@ -75,14 +76,14 @@ const SensorContainer = () => {
         <View style={styles.container}>
             <View
                 style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                     marginHorizontal: 10,
                 }}
             >
                 <Text style={{ fontSize: 30 }}>GAUGES</Text>
-                <Button title="+" onPress={() => router.push('/gauges')} />
+                <Button title="+" onPress={() => router.push("/gauges")} />
             </View>
 
             <FlatList
@@ -112,16 +113,16 @@ export default function Index() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#25292e',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: "#25292e",
+        alignItems: "center",
+        justifyContent: "center",
     },
     text: {
-        color: '#fff',
+        color: "#fff",
     },
     button: {
         fontSize: 20,
-        textDecorationLine: 'underline',
-        color: '#fff',
+        textDecorationLine: "underline",
+        color: "#fff",
     },
 });
