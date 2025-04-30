@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#25292e",
@@ -96,6 +97,15 @@ const styles = StyleSheet.create({
         alignItems: "center", // center inner items horizontally within this box
         backgroundColor: "#292e34",
         borderRadius: 10,
+=======
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    screenContainer: {
+        width: 300, // your fixed width
+        justifyContent: 'center', // center inner items vertically within this box
+        alignItems: 'center', // center inner items horizontally within this box
+>>>>>>> Stashed changes
 =======
         justifyContent: 'center',
         alignItems: 'center',
