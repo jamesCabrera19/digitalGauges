@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import {
     View,
     FlatList,
@@ -9,7 +8,7 @@ import {
     Button,
 } from "react-native";
 import { ReactNode } from "react";
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
 
 const SensorContainer = () => {
     const router = useRouter();
