@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { View, Text, Button, StyleSheet, TextInput } from "react-native";
+import { useState } from 'react';
+import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import {
     GaugeContainer,
     GaugeValueArc,
@@ -7,7 +7,7 @@ import {
     useGaugeState,
     Gauge,
     gaugeClasses,
-} from "@mui/x-charts/Gauge";
+} from '@mui/x-charts/Gauge';
 
 type GaugePointerProps = {
     needleSize: number; // needle size
@@ -15,6 +15,7 @@ type GaugePointerProps = {
     fontWeight: number;
     primaryColor: string; // not implemented -- bar color?
     secondaryColor: string; // not implemented -- needle color?
+    unit: string;
 };
 
 type defaultProps = {
@@ -27,6 +28,14 @@ type defaultProps = {
 type gaugeProps = {
     currentVal: number;
     fontWeight: number;
+};
+type simpleGaugeProps = {
+    currentValue: number;
+    backgroundColor: string;
+    fontColor: string;
+    fontWeight: number;
+    fontSize: number;
+    unit: string;
 };
 const GaugePointer = ({ needleSize }: { needleSize: number }) => {
     const { valueAngle, outerRadius, cx, cy } = useGaugeState();
@@ -64,18 +73,18 @@ const ArcGauge = ({ fontWeight }: gaugeProps) => {
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: "#e0e0e0", // grey reference arc
+                    fill: '#e0e0e0', // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: "#0076ec", // green value arc
+                    fill: '#0076ec', // green value arc (left)
                 },
                 // target the center-value <text> element
-                [`& .${gaugeClasses.valueText}`]: {
-                    fontSize: "32px", // make the number bigger
-                    fill: "#333", // (optional) change color
+                [`& .${gaugeClasses.valueText} text`]: {
+                    fontSize: '32px', // make the number bigger
+                    fill: '#fff',
                     fontWeight: fontWeight, // (optional) make it semibold
-                    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },
             }}
         />
@@ -93,40 +102,46 @@ const RoundGauge = ({ currentVal, fontWeight }: gaugeProps) => {
             endAngle={260}
             text={({ value }) => `${value}`}
             sx={{
-                // target the center-value <text> element
-                [`& .${gaugeClasses.valueText}`]: {
-                    fontSize: "32px", // make the number bigger
-                    fill: "#333", // (optional) change color
+                [`& .${gaugeClasses.valueText} text`]: {
+                    fontSize: '32px', // make the number bigger
+                    fill: '#FFF', // (optional) change color
                     fontWeight: fontWeight, // (optional) make it semibold
-                    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },
             }}
         />
     );
 };
 
-const SimpleGauge = ({ currentVal, fontWeight }: gaugeProps) => {
+const SimpleGauge = ({
+    backgroundColor,
+    fontColor,
+    fontSize,
+    fontWeight,
+    currentValue,
+    unit,
+}: simpleGaugeProps) => {
     return (
         <View
             style={{
+                backgroundColor: backgroundColor,
                 width: 200,
                 height: 200,
                 borderRadius: 100,
-                backgroundColor: "black",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
             }}
         >
             <Text
                 style={{
                     fontWeight: fontWeight,
-                    fontSize: 40,
-                    color: "white",
-                    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                    fontSize: fontSize,
+                    color: fontColor,
+                    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 }}
             >
-                {currentVal}
+                {currentValue}° {unit}
             </Text>
         </View>
     );
@@ -159,36 +174,43 @@ const GaugeComponent = ({
     needleSize,
     GaugeType,
     fontWeight,
+    unit,
 }: GaugePointerProps) => {
     // const needleSize = 5; // 2,3,5
     const currentVal = 220;
     const minVal = 0;
     const maxVal = 280;
 
+    const degrees = unit == 'F' ? currentVal : (currentVal - 32) * (5 / 9);
+    const roundToTwo = (num: number) => {
+        return Math.round(num * 100) / 100;
+    };
+
     const gaugePicker = (gaugeType: string) => {
         switch (gaugeType.toLocaleLowerCase()) {
-            case "arc":
+            case 'arc':
                 return (
-                    <ArcGauge currentVal={currentVal} fontWeight={fontWeight} />
+                    <ArcGauge currentVal={degrees} fontWeight={fontWeight} />
                 );
-            case "round":
+            case 'round':
                 return (
-                    <RoundGauge
-                        currentVal={currentVal}
-                        fontWeight={fontWeight}
-                    />
+                    <RoundGauge currentVal={degrees} fontWeight={fontWeight} />
                 );
-            case "simple":
+            case 'simple':
                 return (
                     <SimpleGauge
-                        currentVal={currentVal}
+                        currentValue={roundToTwo(degrees)}
                         fontWeight={fontWeight}
+                        fontColor="white"
+                        fontSize={40}
+                        backgroundColor="black"
+                        unit={unit}
                     />
                 );
             default:
                 return (
                     <DefaultGauge
-                        currentVal={currentVal}
+                        currentVal={degrees}
                         minVal={minVal}
                         maxVal={maxVal}
                         needleSize={needleSize}
