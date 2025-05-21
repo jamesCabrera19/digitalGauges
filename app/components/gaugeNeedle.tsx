@@ -24,7 +24,7 @@ const GaugeNeedle = ({ updateNeedleSize, active }: NeedleProps) => {
     ];
     return (
         <View style={styles.card}>
-            <Text style={styles.label}>Needle Style</Text>
+            <Text style={styles.label}>Style</Text>
             {/* row container for side-by-side buttons */}
             <View style={styles.buttonRow}>
                 {buttons.map((button) => (
@@ -32,7 +32,7 @@ const GaugeNeedle = ({ updateNeedleSize, active }: NeedleProps) => {
                         key={button.title}
                         title={button.title}
                         onPress={() => updateNeedleSize(button.size)}
-                        disabled={active !== 'Default'}
+                        // disabled={active !== 'Default'}
                     />
                 ))}
             </View>

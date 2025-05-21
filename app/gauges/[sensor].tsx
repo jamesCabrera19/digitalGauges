@@ -4,7 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 //
 import GaugeLabels from '../components/gaugeLabels';
-import GaugeComponent from '../components/gaugeComponent';
+import Gauges from '../components/gauges';
 import GaugeStyle from '../components/gaugeStyle';
 import GaugeNeedle from '../components/gaugeNeedle';
 import GaugeRange from '../components/gaugeRange';
@@ -79,7 +79,7 @@ export default function SensorGauge() {
             </Text>
 
             <View style={styles.container}>
-                <GaugeComponent
+                <Gauges
                     needleSize={state.needleSize}
                     GaugeType={state.gaugeType}
                     fontWeight={400}
