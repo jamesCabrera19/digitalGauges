@@ -48,7 +48,7 @@ const SimpleGauge = ({
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 }}
             >
-                {currentValue}° {needleSize}
+                {currentValue}° {unit}
             </Text>
         </View>
     );
