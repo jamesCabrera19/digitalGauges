@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
-
+import { Context as DataContext } from '../context/dataContext';
 import RoundGauge from '../gaugeFaces/roundGauge';
 import SimpleGauge from '../gaugeFaces/simpleGauge';
 import ArcGauge from '../gaugeFaces/arcGauge';
@@ -13,10 +13,13 @@ type GaugeProps = {
     primaryColor: string; // not implemented -- bar color?
     secondaryColor: string; // not implemented -- needle color?
     unit: string;
+    fontColor: string;
+    backgroundColor: string;
 };
 
 const Gauges = ({ needleSize, GaugeType, fontWeight, unit }: GaugeProps) => {
-    // const needleSize = 5; // 2,3,5
+    const { state } = useContext(DataContext);
+
     const currentVal = 220;
     const minVal = 0;
     const maxVal = 280;
@@ -41,9 +44,9 @@ const Gauges = ({ needleSize, GaugeType, fontWeight, unit }: GaugeProps) => {
                     <SimpleGauge
                         currentValue={roundToTwo(degrees)}
                         fontWeight={fontWeight}
-                        fontColor="white"
+                        fontColor={state.fontColor}
                         fontSize={40}
-                        backgroundColor="black"
+                        backgroundColor={state.backgroundColor}
                         unit={unit}
                         needleSize={needleSize}
                     />
