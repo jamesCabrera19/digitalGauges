@@ -14,11 +14,11 @@ type colorProps = {
     label: string;
     onPress: (color: string) => void;
     active: string;
+    keyType: string;
 };
+type ColorKey = 'backgroundColor' | 'fontColor';
 
-const ColorSwatchRow = ({ label, onPress, active }: colorProps) => {
-    const [isActive, setIsActive] = useState(false);
-
+const ColorSwatchRow = ({ label, onPress, active, keyType }: colorProps) => {
     return (
         <View style={{ marginTop: 10 }}>
             <Text style={{ color: 'white' }}>{label}</Text>
@@ -33,7 +33,7 @@ const ColorSwatchRow = ({ label, onPress, active }: colorProps) => {
                 {COLOR_OPTIONS.map((color) => (
                     <TouchableOpacity
                         key={color}
-                        onPress={() => onPress(color)}
+                        onPress={() => onPress(keyType, color)}
                         style={{
                             backgroundColor: color,
                             height: 36,
@@ -50,15 +50,13 @@ const ColorSwatchRow = ({ label, onPress, active }: colorProps) => {
 };
 const GaugeColorPicker = () => {
     const { state: data, updateData } = useContext(DataContext);
-    const [scheme, setScheme] = useState({
-        background: '#ff1a1a',
-        font: '#ffffff',
-    });
 
-    const handlePress = (color: string, key: keyof data) => {
-        // console.log(color);
-        updateData(color);
-        // Optional: update state here (e.g. setScheme)
+    const handlePress = (key: ColorKey, color: string) => {
+        // const data: Partial<Record<ColorKey, string>> = { [key]: color };
+
+        const data = { [key]: color };
+        console.log(data);
+        // updateData(data);
     };
     // console.log(data);
     return (
@@ -73,11 +71,13 @@ const GaugeColorPicker = () => {
         >
             <ColorSwatchRow
                 label="Background color"
+                keyType="backgroundColor"
                 onPress={handlePress}
                 active={data.backgroundColor}
             />
             <ColorSwatchRow
                 label="Font color"
+                keyType="fontColor"
                 onPress={handlePress}
                 active={data.fontColor}
             />
