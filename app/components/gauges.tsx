@@ -7,63 +7,58 @@ import ArcGauge from '../gaugeFaces/arcGauge';
 import DefaultGauge from '../gaugeFaces/defaultGauge';
 
 type GaugeProps = {
-    needleSize: number; // needle size
-    GaugeType: string;
+    needleSize: number;
+    gaugeType: string;
     fontWeight: number;
-    primaryColor: string; // not implemented -- bar color?
-    secondaryColor: string; // not implemented -- needle color?
-    unit: string;
-    fontColor: string;
+    unit: 'C' | 'F';
     backgroundColor: string;
+    fontColor: string;
 };
 
-const Gauges = ({ needleSize, GaugeType, fontWeight, unit }: GaugeProps) => {
-    const { state } = useContext(DataContext);
-
+const Gauges = ({
+    needleSize,
+    gaugeType,
+    fontWeight,
+    unit,
+    backgroundColor,
+    fontColor,
+}: GaugeProps) => {
     const currentVal = 220;
     const minVal = 0;
     const maxVal = 280;
 
-    const degrees = unit == 'F' ? currentVal : (currentVal - 32) * (5 / 9);
-    const roundToTwo = (num: number) => {
-        return Math.round(num * 100) / 100;
-    };
+    const toDisplay = unit === 'F' ? currentVal : (currentVal - 32) * (5 / 9);
 
-    const gaugePicker = (gaugeType: string) => {
-        switch (gaugeType.toLocaleLowerCase()) {
-            case 'arc':
-                return (
-                    <ArcGauge currentVal={degrees} fontWeight={fontWeight} />
-                );
-            case 'round':
-                return (
-                    <RoundGauge currentVal={degrees} fontWeight={fontWeight} />
-                );
-            case 'simple':
-                return (
-                    <SimpleGauge
-                        currentValue={roundToTwo(degrees)}
-                        fontWeight={fontWeight}
-                        fontColor={state.fontColor}
-                        fontSize={40}
-                        backgroundColor={state.backgroundColor}
-                        unit={unit}
-                        needleSize={needleSize}
-                    />
-                );
-            default:
-                return (
-                    <DefaultGauge
-                        currentVal={degrees}
-                        minVal={minVal}
-                        maxVal={maxVal}
-                        needleSize={needleSize}
-                    />
-                );
-        }
-    };
+    const roundToTwo = (n: number) => Math.round(n * 100) / 100;
 
-    return <View>{gaugePicker(GaugeType)}</View>;
+    switch (gaugeType.toLowerCase()) {
+        case 'arc':
+            return <ArcGauge currentVal={toDisplay} fontWeight={fontWeight} />;
+        case 'round':
+            return (
+                <RoundGauge currentVal={toDisplay} fontWeight={fontWeight} />
+            );
+        case 'simple':
+            return (
+                <SimpleGauge
+                    currentValue={roundToTwo(toDisplay)}
+                    fontWeight={fontWeight}
+                    fontColor={fontColor}
+                    fontSize={40}
+                    backgroundColor={backgroundColor}
+                    unit={unit}
+                    needleSize={needleSize}
+                />
+            );
+        default:
+            return (
+                <DefaultGauge
+                    currentVal={toDisplay}
+                    minVal={minVal}
+                    maxVal={maxVal}
+                    needleSize={needleSize}
+                />
+            );
+    }
 };
-
 export default Gauges;

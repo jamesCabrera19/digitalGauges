@@ -1,5 +1,12 @@
 import { useState, useReducer, useContext } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import {
+    View,
+    Text,
+    Button,
+    StyleSheet,
+    TextInput,
+    ScrollView,
+} from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -17,6 +24,7 @@ export default function SensorGauge() {
     const { sensor } = useLocalSearchParams<{ sensor: string }>();
     const {
         state,
+        updateData,
         updateRange,
         updateNeedleSize,
         updateGaugeType,
@@ -27,21 +35,22 @@ export default function SensorGauge() {
     const saveChanges = () => console.log({ sensor, ...state });
 
     return (
-        <SafeAreaView style={styles.screen}>
-            <Text style={styles.label}>
-                {sensor.replace('-', ' ').toUpperCase()} Gauge
-            </Text>
+        <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            style={styles.screen}
+        >
+            {/* <Text style={styles.label}>
+                {sensor.replace('-', ' ').toUpperCase()} Gauge sss
+            </Text> */}
 
             <View style={styles.container}>
                 <Gauges
                     needleSize={state.needleSize}
-                    GaugeType={state.gaugeType}
+                    gaugeType={state.gaugeType}
                     fontWeight={400}
-                    primaryColor="red"
-                    secondaryColor="blue"
                     unit={state.unit}
-                    backgroundColor=""
-                    fontColor=""
+                    backgroundColor={state.backgroundColor}
+                    fontColor={state.fontColor}
                 />
 
                 <GaugeStyle updateGaugeType={updateGaugeType} />
@@ -50,7 +59,12 @@ export default function SensorGauge() {
                     updateNeedleSize={updateNeedleSize}
                     active={state.gaugeType}
                 />
-                <GaugeColorPicker />
+
+                <GaugeColorPicker
+                    backgroundColor={state.backgroundColor}
+                    fontColor={state.fontColor}
+                    updateColor={updateData}
+                />
 
                 <GaugeRange updateRange={updateRange} />
                 <GaugeLabels
@@ -68,16 +82,19 @@ export default function SensorGauge() {
                     />
                 </View>
             </View>
-        </SafeAreaView>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-
+    scrollContent: {
+        flexGrow: 1, // allows content to grow beyond the viewport
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 16, // optional padding around your content
+    },
+    screen: {
+        flex: 1,
         backgroundColor: '#25292e',
     },
     container: {

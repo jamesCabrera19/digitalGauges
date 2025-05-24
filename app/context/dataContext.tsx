@@ -34,10 +34,9 @@ const initialState: State = {
     color: 'red',
     gauge: 'simple',
     other: 'other',
-    backgroundColor: 'red',
+    backgroundColor: 'black',
     fontColor: 'white',
     style: 'normal',
-
     range: { min: 0, max: 0 },
     needleSize: 3,
     gaugeType: 'SimpleGauge',
