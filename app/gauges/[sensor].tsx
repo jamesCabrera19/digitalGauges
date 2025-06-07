@@ -30,24 +30,20 @@ export default function SensorGauge() {
         updateGaugeType,
         updateUnitDisplay,
         handleReset,
+        sendData,
     } = useContext(DataContext);
 
-    const saveChanges = () => console.log({ sensor, ...state });
+    const saveChanges = () => sendData({ ...state });
 
     return (
         <ScrollView
             contentContainerStyle={styles.scrollContent}
             style={styles.screen}
         >
-            {/* <Text style={styles.label}>
-                {sensor.replace('-', ' ').toUpperCase()} Gauge sss
-            </Text> */}
-
             <View style={styles.container}>
                 <Gauges
                     needleSize={state.needleSize}
                     gaugeType={state.gaugeType}
-                    fontWeight={400}
                     unit={state.unit}
                     backgroundColor={state.backgroundColor}
                     fontColor={state.fontColor}

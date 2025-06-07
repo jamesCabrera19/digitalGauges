@@ -51,11 +51,6 @@ const SensorContainer = () => {
     const router = useRouter();
     const { state } = useContext(DataContext);
 
-    const onItemClick = (id: number): void => {
-        // on press navigate to sensor screen modifier
-        console.log(id);
-    };
-
     const Item = ({ name, val, route, status }: props) => (
         <Pressable
             style={styles.item}
@@ -84,8 +79,6 @@ const SensorContainer = () => {
             <Text style={{ fontSize: 50, color: 'white' }}>{val} </Text>
         </Pressable>
     );
-
-    console.log('Index: ', state);
 
     return (
         <View style={styles.container}>

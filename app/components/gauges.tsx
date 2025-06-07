@@ -9,7 +9,6 @@ import DefaultGauge from '../gaugeFaces/defaultGauge';
 type GaugeProps = {
     needleSize: number;
     gaugeType: string;
-    fontWeight: number;
     unit: 'C' | 'F';
     backgroundColor: string;
     fontColor: string;
@@ -18,7 +17,6 @@ type GaugeProps = {
 const Gauges = ({
     needleSize,
     gaugeType,
-    fontWeight,
     unit,
     backgroundColor,
     fontColor,
@@ -33,18 +31,16 @@ const Gauges = ({
 
     switch (gaugeType.toLowerCase()) {
         case 'arc':
-            return <ArcGauge currentVal={toDisplay} fontWeight={fontWeight} />;
+            return <ArcGauge temperature={toDisplay} needleSize={needleSize} />;
         case 'round':
             return (
-                <RoundGauge currentVal={toDisplay} fontWeight={fontWeight} />
+                <RoundGauge temperature={toDisplay} needleSize={needleSize} />
             );
         case 'simple':
             return (
                 <SimpleGauge
-                    currentValue={roundToTwo(toDisplay)}
-                    fontWeight={fontWeight}
+                    temperature={roundToTwo(toDisplay)}
                     fontColor={fontColor}
-                    fontSize={40}
                     backgroundColor={backgroundColor}
                     unit={unit}
                     needleSize={needleSize}

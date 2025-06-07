@@ -11,11 +11,19 @@ import {
 
 // shared // shared
 type gaugeProps = {
-    currentVal: number;
-    fontWeight: number;
+    temperature: number;
+    needleSize: number;
 };
 
-const ArcGauge = ({ fontWeight }: gaugeProps) => {
+const ArcGauge = ({ needleSize, temperature }: gaugeProps) => {
+    let weight = 400;
+    if (needleSize === 2) {
+        weight = 100;
+    } else if (needleSize === 3) {
+        weight = 500;
+    } else {
+        weight = 600;
+    }
     return (
         <Gauge
             width={200}
@@ -37,7 +45,7 @@ const ArcGauge = ({ fontWeight }: gaugeProps) => {
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
                     fill: '#fff',
-                    fontWeight: fontWeight, // (optional) make it semibold
+                    fontWeight: weight, // (optional) make it semibold
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },
             }}

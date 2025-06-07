@@ -5,8 +5,8 @@ type Range = {
     max: number;
 };
 type State = {
-    color: string; // delete
-    gauge: string;
+    // color: string; // delete
+    // gauge: string;
     other: string;
     backgroundColor: string;
     fontColor: string;
@@ -25,27 +25,29 @@ type Action =
     | { type: 'SET_TYPE'; payload: string }
     | { type: 'SET_UNIT'; payload: 'C' | 'F' }
     | { type: 'RESET' }
+    | { type: 'SEND_DATA'; payload?: any }
     | { type: 'other_action'; payload?: any };
 
 type Dispatch = (action: Action) => void;
 
 // Initial State
 const initialState: State = {
-    color: 'red',
-    gauge: 'simple',
+    // color: 'red',
+    // gauge: 'simple',
     other: 'other',
     backgroundColor: 'black',
     fontColor: 'white',
     style: 'normal',
     range: { min: 0, max: 0 },
     needleSize: 3,
-    gaugeType: 'SimpleGauge',
+    gaugeType: 'Simple',
     unit: 'F',
 };
 //Reducer
 const dataReducer = (state: State, action: Action) => {
     switch (action.type) {
         case 'UPDATE_COLORS':
+            // backgroundColor || fontColor
             const dataDestructured = {
                 [action.payload.key]: action.payload.color,
             };
@@ -65,16 +67,11 @@ const dataReducer = (state: State, action: Action) => {
     }
 };
 
-const sendData = (dispatch: Dispatch) => async () => {
+const sendData = (dispatch: Dispatch) => async (data: any) => {
     try {
-        const dummyData = {
-            color: '',
-            gauge: '',
-            other: '',
-            backgroundColor: '',
-            updateData: '',
-        };
-        dispatch({ type: 'set_data', payload: dummyData });
+        // check: gauge: simple, gaugeType:Simple,
+        console.log('Data payload: ', data);
+        dispatch({ type: 'SEND_DATA', payload: {} });
     } catch (error) {
         console.log('ERROR');
     }

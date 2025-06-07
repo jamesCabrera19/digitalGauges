@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 
 type gaugeProps = {
-    currentValue: number;
+    temperature: number;
     backgroundColor: string;
     fontColor: string;
-    fontWeight: number;
-    fontSize: number;
     unit: string;
     needleSize: number; // 2,3,5
 };
@@ -14,19 +12,17 @@ type gaugeProps = {
 const SimpleGauge = ({
     backgroundColor,
     fontColor,
-    fontSize,
-    fontWeight,
-    currentValue,
+    temperature,
     unit,
     needleSize,
 }: gaugeProps) => {
-    let font = 400;
+    let weight = 400;
     if (needleSize === 2) {
-        font = 100;
+        weight = 100;
     } else if (needleSize === 3) {
-        font = 500;
+        weight = 500;
     } else {
-        font = 600;
+        weight = 600;
     }
     return (
         <View
@@ -42,13 +38,13 @@ const SimpleGauge = ({
         >
             <Text
                 style={{
-                    fontWeight: font,
-                    fontSize: fontSize,
+                    fontWeight: weight,
+                    fontSize: 40,
                     color: fontColor,
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 }}
             >
-                {currentValue}° {unit}
+                {temperature}° {unit}
             </Text>
         </View>
     );
