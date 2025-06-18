@@ -57,9 +57,9 @@ export default function SensorGauge() {
                 />
 
                 <GaugeColorPicker
+                    updateColor={updateData}
                     backgroundColor={state.backgroundColor}
                     fontColor={state.fontColor}
-                    updateColor={updateData}
                 />
 
                 <GaugeRange updateRange={updateRange} />

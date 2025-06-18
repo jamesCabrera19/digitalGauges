@@ -38,7 +38,7 @@ const initialState: State = {
     backgroundColor: 'black',
     fontColor: 'white',
     style: 'normal',
-    range: { min: 0, max: 0 },
+    range: { min: 0, max: 100 },
     needleSize: 3,
     gaugeType: 'Simple',
     unit: 'F',

@@ -16,17 +16,22 @@ type colorProps = {
     label: string;
     onPress: (key: string, color: string) => void;
     active: string;
-    keyType: string;
+    key: string;
+};
+type Props = {
+    updateColor: (key: string, color: string) => void;
+    backgroundColor: string;
+    fontColor: string;
 };
 
-const ColorSwatchRow = ({ label, active, keyType, onPress }: colorProps) => (
+const ColorSwatchRow = ({ label, active, key, onPress }: colorProps) => (
     <View style={styles.rowContainer}>
         <Text style={styles.label}>{label}</Text>
         <View style={styles.swatchRow}>
             {COLOR_OPTIONS.map((color) => (
                 <TouchableOpacity
                     key={color}
-                    onPress={() => onPress(keyType, color)}
+                    onPress={() => onPress(key, color)}
                     style={[
                         styles.swatch,
                         {
@@ -40,26 +45,29 @@ const ColorSwatchRow = ({ label, active, keyType, onPress }: colorProps) => (
     </View>
 );
 
-const GaugeColorPicker = () => {
-    const { state: data, updateData } = useContext(DataContext);
-
+const GaugeColorPicker = ({
+    updateColor,
+    backgroundColor,
+    fontColor,
+}: Props) => {
     const handlePress = (key: string, color: string) => {
-        updateData({ key, color });
+        // updateColor(key, color);
+        // console.log(backgroundColor, fontColor);
     };
 
     return (
         <View style={styles.container}>
             <ColorSwatchRow
                 label="Background color"
-                keyType="backgroundColor"
+                key="backgroundColor"
                 onPress={handlePress}
-                active={data.backgroundColor}
+                active={backgroundColor}
             />
             <ColorSwatchRow
                 label="Font color"
-                keyType="fontColor"
+                key="fontColor"
                 onPress={handlePress}
-                active={data.fontColor}
+                active={fontColor}
             />
         </View>
     );
