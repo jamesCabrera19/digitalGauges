@@ -12,6 +12,7 @@ type GaugeProps = {
     unit: 'C' | 'F';
     backgroundColor: string;
     fontColor: string;
+    range: { min: number; max: number };
 };
 
 const Gauges = ({
@@ -20,26 +21,39 @@ const Gauges = ({
     unit,
     backgroundColor,
     fontColor,
+    range,
 }: GaugeProps) => {
     const currentVal = 220;
     const minVal = 0;
     const maxVal = 280;
 
-    const toDisplay = unit === 'F' ? currentVal : (currentVal - 32) * (5 / 9);
+    const currentTemp = unit === 'F' ? currentVal : (currentVal - 32) * (5 / 9);
 
     const roundToTwo = (n: number) => Math.round(n * 100) / 100;
 
+    const getPercentageTemp = (start: number, max: number, current: number) => {
+        return Math.round(((current - start) / (max - start)) * 100);
+    };
+    // temp variable name
+    const TEMP = getPercentageTemp(range.min, range.max, currentTemp);
+
     switch (gaugeType.toLowerCase()) {
         case 'arc':
-            return <ArcGauge temperature={toDisplay} needleSize={needleSize} />;
+            return (
+                <ArcGauge
+                    temperature={TEMP}
+                    needleSize={needleSize}
+                    colors={[backgroundColor, fontColor]}
+                />
+            );
         case 'round':
             return (
-                <RoundGauge temperature={toDisplay} needleSize={needleSize} />
+                <RoundGauge temperature={currentTemp} needleSize={needleSize} />
             );
         case 'simple':
             return (
                 <SimpleGauge
-                    temperature={roundToTwo(toDisplay)}
+                    temperature={roundToTwo(currentTemp)}
                     fontColor={fontColor}
                     backgroundColor={backgroundColor}
                     unit={unit}
@@ -49,7 +63,7 @@ const Gauges = ({
         default:
             return (
                 <DefaultGauge
-                    currentVal={toDisplay}
+                    currentVal={currentTemp}
                     minVal={minVal}
                     maxVal={maxVal}
                     needleSize={needleSize}

@@ -20,16 +20,13 @@ type colorProps = {
 };
 type Props = {
     updateColor: (key: string, color: string) => void;
-    backgroundColor: string;
-    fontColor: string;
+    colors: string[];
 };
 
 const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
     return (
         <View style={styles.rowContainer}>
-            <Text style={styles.label}>
-                {label} {active}
-            </Text>
+            <Text style={styles.label}>{label}</Text>
             <View style={styles.swatchRow}>
                 {COLOR_OPTIONS.map((color) => (
                     <TouchableOpacity
@@ -49,14 +46,11 @@ const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
     );
 };
 
-const GaugeColorPicker = ({
-    updateColor,
-    backgroundColor,
-    fontColor,
-}: Props) => {
+const GaugeColorPicker = ({ updateColor, colors }: Props) => {
     const handlePress = (colorKey: string, color: string) => {
         updateColor(colorKey, color);
     };
+    const [backgroundColor, fontColor] = colors;
 
     return (
         <View style={styles.container}>

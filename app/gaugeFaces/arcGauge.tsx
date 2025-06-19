@@ -1,45 +1,38 @@
-import { useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
-import {
-    GaugeContainer,
-    GaugeValueArc,
-    GaugeReferenceArc,
-    useGaugeState,
-    Gauge,
-    gaugeClasses,
-} from '@mui/x-charts/Gauge';
+import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 
 // shared // shared
 type gaugeProps = {
     temperature: number;
     needleSize: number;
+    colors: string[];
 };
 
-const ArcGauge = ({ needleSize, temperature }: gaugeProps) => {
+const ArcGauge = ({ needleSize, temperature, colors }: gaugeProps) => {
     let weight = 400;
-    if (needleSize === 2) {
-        weight = 100;
-    } else if (needleSize === 3) {
+    if (needleSize === 3) {
         weight = 500;
+    } else if (needleSize === 2) {
+        weight = 100;
     } else {
         weight = 600;
     }
+    // colors[1] is actually the font color. wee need to add an additional row of colors.
     return (
         <Gauge
             width={200}
             height={200}
-            value={50}
+            value={temperature}
             startAngle={-90}
             endAngle={90}
             text={({ value }) => `${value}`}
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: '#e0e0e0', // white part,(right)
+                    fill: colors[0], //'#e0e0e0', // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: '#0076ec', // green value arc (left)
+                    fill: colors[1], //'#0076ec', // green value arc (left)
                 },
                 // target the center-value <text> element
                 [`& .${gaugeClasses.valueText} text`]: {

@@ -47,6 +47,7 @@ export default function SensorGauge() {
                     unit={state.unit}
                     backgroundColor={state.backgroundColor}
                     fontColor={state.fontColor}
+                    range={state.range}
                 />
 
                 <GaugeStyle updateGaugeType={updateGaugeType} />
@@ -58,11 +59,10 @@ export default function SensorGauge() {
 
                 <GaugeColorPicker
                     updateColor={updateData}
-                    backgroundColor={state.backgroundColor}
-                    fontColor={state.fontColor}
+                    colors={[state.backgroundColor, state.fontColor]}
                 />
 
-                <GaugeRange updateRange={updateRange} />
+                <GaugeRange updateRange={updateRange} ranges={state.range} />
                 <GaugeLabels
                     updateUnit={(val) =>
                         updateUnitDisplay(val.toUpperCase() as 'C' | 'F')

@@ -12,18 +12,19 @@ import {
 import { Slider } from '@miblanchard/react-native-slider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-type GaugeRangeProps = {
-    updateRange: (newRange: Range) => void;
-};
 interface Range {
     min: number;
     max: number;
 }
+type GaugeRangeProps = {
+    updateRange: (newRange: Range) => void;
+    ranges: {};
+};
 
-const GaugeRange = ({ updateRange }: GaugeRangeProps) => {
+const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
     // min and max values
-    const [minValue, setMinValue] = useState(0); // min value Range
-    const [maxValue, setMaxValue] = useState(100); // max value Range
+    const [minValue, setMinValue] = useState(ranges.min); // min value Range
+    const [maxValue, setMaxValue] = useState(ranges.max); // max value Range
 
     const data = [
         {
@@ -110,7 +111,7 @@ const GaugeRange = ({ updateRange }: GaugeRangeProps) => {
     };
     return (
         <View style={styles.card}>
-            <Text style={styles.label}>Range</Text>
+            <Text style={[styles.text, { fontSize: 16 }]}>Red Zone Range</Text>
 
             {data.map(({ title, startValue, endingValue }) => {
                 const value = title === 'Min' ? minValue : maxValue;
@@ -145,9 +146,6 @@ const GaugeRange = ({ updateRange }: GaugeRangeProps) => {
             })}
 
             <View style={styles.container}>
-                <Text style={[styles.text, { fontSize: 16 }]}>
-                    Red Zone Range
-                </Text>
                 <View style={styles.textBox}>
                     <View style={styles.box}>
                         <Text style={styles.text}>{minValue}</Text>
