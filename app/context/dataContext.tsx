@@ -19,7 +19,10 @@ type State = {
 };
 
 type Action =
-    | { type: 'UPDATE_COLORS'; payload: { key: keyof State; color: string } }
+    | {
+          type: 'UPDATE_COLORS';
+          payload: { colorKey: string; color: string };
+      }
     | { type: 'SET_RANGE'; payload: Range }
     | { type: 'SET_NEEDLE'; payload: number }
     | { type: 'SET_TYPE'; payload: string }
@@ -35,8 +38,8 @@ const initialState: State = {
     // color: 'red',
     // gauge: 'simple',
     other: 'other',
-    backgroundColor: 'black',
-    fontColor: 'white',
+    backgroundColor: '#000000',
+    fontColor: '#ffffff',
     style: 'normal',
     range: { min: 0, max: 100 },
     needleSize: 3,
@@ -49,7 +52,7 @@ const dataReducer = (state: State, action: Action) => {
         case 'UPDATE_COLORS':
             // backgroundColor || fontColor
             const dataDestructured = {
-                [action.payload.key]: action.payload.color,
+                [action.payload.colorKey]: action.payload.color,
             };
             return { ...state, ...dataDestructured };
         case 'SET_RANGE':
@@ -77,7 +80,9 @@ const sendData = (dispatch: Dispatch) => async (data: any) => {
     }
 };
 const updateData =
-    (dispatch: Dispatch) => (data: { key: keyof State; color: string }) => {
+    (dispatch: Dispatch) => (colorKey: string, color: string) => {
+        // console.log(colorKey, color);
+        const data = { colorKey, color };
         dispatch({ type: 'UPDATE_COLORS', payload: data });
     };
 const updateRange = (dispatch: Dispatch) => (range: Range) => {

@@ -16,7 +16,7 @@ type colorProps = {
     label: string;
     onPress: (key: string, color: string) => void;
     active: string;
-    key: string;
+    colorKey: string;
 };
 type Props = {
     updateColor: (key: string, color: string) => void;
@@ -24,48 +24,51 @@ type Props = {
     fontColor: string;
 };
 
-const ColorSwatchRow = ({ label, active, key, onPress }: colorProps) => (
-    <View style={styles.rowContainer}>
-        <Text style={styles.label}>{label}</Text>
-        <View style={styles.swatchRow}>
-            {COLOR_OPTIONS.map((color) => (
-                <TouchableOpacity
-                    key={color}
-                    onPress={() => onPress(key, color)}
-                    style={[
-                        styles.swatch,
-                        {
-                            backgroundColor: color,
-                            borderWidth: active === color ? 3 : 0,
-                        },
-                    ]}
-                />
-            ))}
+const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
+    return (
+        <View style={styles.rowContainer}>
+            <Text style={styles.label}>
+                {label} {active}
+            </Text>
+            <View style={styles.swatchRow}>
+                {COLOR_OPTIONS.map((color) => (
+                    <TouchableOpacity
+                        key={color}
+                        onPress={() => onPress(colorKey, color)}
+                        style={[
+                            styles.swatch,
+                            {
+                                backgroundColor: color,
+                                borderWidth: active === color ? 3 : 0,
+                            },
+                        ]}
+                    />
+                ))}
+            </View>
         </View>
-    </View>
-);
+    );
+};
 
 const GaugeColorPicker = ({
     updateColor,
     backgroundColor,
     fontColor,
 }: Props) => {
-    const handlePress = (key: string, color: string) => {
-        // updateColor(key, color);
-        // console.log(backgroundColor, fontColor);
+    const handlePress = (colorKey: string, color: string) => {
+        updateColor(colorKey, color);
     };
 
     return (
         <View style={styles.container}>
             <ColorSwatchRow
                 label="Background color"
-                key="backgroundColor"
+                colorKey="backgroundColor"
                 onPress={handlePress}
                 active={backgroundColor}
             />
             <ColorSwatchRow
                 label="Font color"
-                key="fontColor"
+                colorKey="fontColor"
                 onPress={handlePress}
                 active={fontColor}
             />
