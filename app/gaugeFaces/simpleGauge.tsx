@@ -7,15 +7,10 @@ type gaugeProps = {
     fontColor: string;
     unit: string;
     needleSize: number; // 2,3,5
+    colors: string[];
 };
 
-const SimpleGauge = ({
-    backgroundColor,
-    fontColor,
-    temperature,
-    unit,
-    needleSize,
-}: gaugeProps) => {
+const SimpleGauge = ({ temperature, unit, needleSize, colors }: gaugeProps) => {
     let weight = 400;
     if (needleSize === 2) {
         weight = 100;
@@ -24,6 +19,9 @@ const SimpleGauge = ({
     } else {
         weight = 600;
     }
+
+    const [backgroundColor, fontColor] = colors;
+
     return (
         <View
             style={{

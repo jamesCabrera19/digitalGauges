@@ -16,6 +16,7 @@ const ArcGauge = ({ needleSize, temperature, colors }: gaugeProps) => {
     } else {
         weight = 600;
     }
+    const [backgroundColor, secondaryColor, fontColor] = colors;
     // colors[1] is actually the font color. wee need to add an additional row of colors.
     return (
         <Gauge
@@ -28,16 +29,16 @@ const ArcGauge = ({ needleSize, temperature, colors }: gaugeProps) => {
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: colors[0], //'#e0e0e0', // white part,(right)
+                    fill: backgroundColor, //'#e0e0e0', // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: colors[1], //'#0076ec', // green value arc (left)
+                    fill: secondaryColor, //'#0076ec', // green value arc (left)
                 },
                 // target the center-value <text> element
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
-                    fill: '#fff',
+                    fill: fontColor,
                     fontWeight: weight, // (optional) make it semibold
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },

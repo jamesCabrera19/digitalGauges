@@ -10,6 +10,7 @@ const COLOR_OPTIONS = [
     '#000000',
     '#ffffff', // Porsche White
     '#ff0000', // Dodge Red
+    // '#ffbf00' green
 ];
 
 type colorProps = {
@@ -21,6 +22,7 @@ type colorProps = {
 type Props = {
     updateColor: (key: string, color: string) => void;
     colors: string[];
+    gaugeFace: string;
 };
 
 const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
@@ -46,11 +48,11 @@ const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
     );
 };
 
-const GaugeColorPicker = ({ updateColor, colors }: Props) => {
+const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
     const handlePress = (colorKey: string, color: string) => {
         updateColor(colorKey, color);
     };
-    const [backgroundColor, fontColor] = colors;
+    const [backgroundColor, fontColor, secondaryColor] = colors;
 
     return (
         <View style={styles.container}>
@@ -60,6 +62,14 @@ const GaugeColorPicker = ({ updateColor, colors }: Props) => {
                 onPress={handlePress}
                 active={backgroundColor}
             />
+            {gaugeFace.toLowerCase() === 'arc' ? (
+                <ColorSwatchRow
+                    label="Fill color"
+                    colorKey="secondaryColor"
+                    onPress={handlePress}
+                    active={secondaryColor}
+                />
+            ) : null}
             <ColorSwatchRow
                 label="Font color"
                 colorKey="fontColor"

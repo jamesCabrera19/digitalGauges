@@ -45,6 +45,12 @@ export default function SensorGauge() {
                     needleSize={state.needleSize}
                     gaugeType={state.gaugeType}
                     unit={state.unit}
+                    colors={[
+                        state.backgroundColor,
+                        state.secondaryColor,
+                        state.fontColor,
+                    ]}
+                    secondaryColor={state.secondaryColor}
                     backgroundColor={state.backgroundColor}
                     fontColor={state.fontColor}
                     range={state.range}
@@ -59,7 +65,12 @@ export default function SensorGauge() {
 
                 <GaugeColorPicker
                     updateColor={updateData}
-                    colors={[state.backgroundColor, state.fontColor]}
+                    colors={[
+                        state.backgroundColor,
+                        state.fontColor,
+                        state.secondaryColor,
+                    ]}
+                    gaugeFace={state.gaugeType}
                 />
 
                 <GaugeRange updateRange={updateRange} ranges={state.range} />

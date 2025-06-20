@@ -5,13 +5,11 @@ type Range = {
     max: number;
 };
 type State = {
-    // color: string; // delete
-    // gauge: string;
     other: string;
     backgroundColor: string;
+    secondaryColor: string;
     fontColor: string;
     style: string;
-
     range: Range;
     needleSize: number;
     gaugeType: string;
@@ -39,6 +37,7 @@ const initialState: State = {
     // gauge: 'simple',
     other: 'other',
     backgroundColor: '#000000',
+    secondaryColor: '#ffbf00',
     fontColor: '#ffffff',
     style: 'normal',
     range: { min: 50, max: 260 },
