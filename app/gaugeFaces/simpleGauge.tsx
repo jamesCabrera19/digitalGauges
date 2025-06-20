@@ -3,8 +3,6 @@ import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 
 type gaugeProps = {
     temperature: number;
-    backgroundColor: string;
-    fontColor: string;
     unit: string;
     needleSize: number; // 2,3,5
     colors: string[];

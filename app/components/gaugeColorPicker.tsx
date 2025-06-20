@@ -56,13 +56,8 @@ const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
 
     return (
         <View style={styles.container}>
-            <ColorSwatchRow
-                label="Background color"
-                colorKey="backgroundColor"
-                onPress={handlePress}
-                active={backgroundColor}
-            />
-            {gaugeFace.toLowerCase() === 'arc' ? (
+            {gaugeFace.toLowerCase() === 'arc' ||
+            gaugeFace.toLowerCase() === 'round' ? (
                 <ColorSwatchRow
                     label="Fill color"
                     colorKey="secondaryColor"
@@ -70,6 +65,13 @@ const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
                     active={secondaryColor}
                 />
             ) : null}
+            <ColorSwatchRow
+                label="Background color"
+                colorKey="backgroundColor"
+                onPress={handlePress}
+                active={backgroundColor}
+            />
+
             <ColorSwatchRow
                 label="Font color"
                 colorKey="fontColor"

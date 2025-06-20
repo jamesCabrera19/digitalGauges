@@ -50,9 +50,6 @@ export default function SensorGauge() {
                         state.secondaryColor,
                         state.fontColor,
                     ]}
-                    secondaryColor={state.secondaryColor}
-                    backgroundColor={state.backgroundColor}
-                    fontColor={state.fontColor}
                     range={state.range}
                 />
 

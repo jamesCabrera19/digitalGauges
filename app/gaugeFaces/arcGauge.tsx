@@ -3,15 +3,15 @@ import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 // shared // shared
 type gaugeProps = {
     temperature: number;
-    needleSize: number;
+    fontWeight: number;
     colors: string[];
 };
 
-const ArcGauge = ({ needleSize, temperature, colors }: gaugeProps) => {
-    let weight = 400;
-    if (needleSize === 3) {
+const ArcGauge = ({ fontWeight, temperature, colors }: gaugeProps) => {
+    let weight = 0;
+    if (fontWeight === 3) {
         weight = 500;
-    } else if (needleSize === 2) {
+    } else if (fontWeight === 2) {
         weight = 100;
     } else {
         weight = 600;

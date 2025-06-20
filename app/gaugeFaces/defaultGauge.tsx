@@ -45,15 +45,20 @@ const DefaultGauge = ({
     maxVal,
     needleSize,
 }: defaultProps) => {
+    const backgroundColor = '#52b202';
+    const secondaryColor = '#ffbf00';
     return (
         <GaugeContainer
             width={200}
             height={200}
-            startAngle={-110}
-            endAngle={110}
+            startAngle={-100}
+            endAngle={100}
             value={currentVal}
-            valueMin={minVal} // define your range
+            valueMin={minVal}
             valueMax={maxVal}
+            innerRadius="80%" // thickness of the gauge
+            outerRadius="90%"
+            cornerRadius="0%" // round or sharp edges
         >
             <GaugeReferenceArc />
             <GaugeValueArc />

@@ -50,21 +50,23 @@ const Gauges = ({ needleSize, gaugeType, unit, range, colors }: GaugeProps) => {
             return (
                 <ArcGauge
                     temperature={temperatureProgress}
-                    needleSize={needleSize}
+                    fontWeight={needleSize}
                     colors={[backgroundColor, secondaryColor, fontColor]}
                 />
             );
         case 'round':
             return (
-                <RoundGauge temperature={currentTemp} needleSize={needleSize} />
+                <RoundGauge
+                    temperature={currentTemp}
+                    needleSize={needleSize}
+                    colors={[backgroundColor, secondaryColor, fontColor]}
+                />
             );
         case 'simple':
             return (
                 <SimpleGauge
                     temperature={roundToTwo(currentTemp)}
                     colors={[backgroundColor, fontColor]}
-                    fontColor={fontColor}
-                    backgroundColor={backgroundColor}
                     unit={unit}
                     needleSize={needleSize}
                 />
