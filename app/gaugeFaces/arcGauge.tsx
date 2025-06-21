@@ -20,6 +20,9 @@ const ArcGauge = ({ fontWeight, temperature, colors }: gaugeProps) => {
     // colors[1] is actually the font color. wee need to add an additional row of colors.
     return (
         <Gauge
+            // cx={0}
+            // cy={'3%'}
+            outerRadius={'90%'} // size increase
             width={200}
             height={200}
             value={temperature}

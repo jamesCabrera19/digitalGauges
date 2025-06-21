@@ -74,7 +74,8 @@ const Gauges = ({ needleSize, gaugeType, unit, range, colors }: GaugeProps) => {
         default:
             return (
                 <DefaultGauge
-                    currentVal={currentTemp}
+                    temperature={currentTemp}
+                    colors={[backgroundColor, fontColor]}
                     minVal={minVal}
                     maxVal={maxVal}
                     needleSize={needleSize}
