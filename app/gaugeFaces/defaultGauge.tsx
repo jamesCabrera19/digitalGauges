@@ -17,10 +17,10 @@ type defaultProps = {
 };
 type gaugePointerProps = {
     needleSize: number;
-    colors: string[];
+    color: string;
 };
 
-const GaugePointer = ({ needleSize, colors }: gaugePointerProps) => {
+const GaugePointer = ({ needleSize, color }: gaugePointerProps) => {
     const { valueAngle, outerRadius, cx, cy } = useGaugeState();
 
     if (valueAngle === null) {
@@ -32,13 +32,12 @@ const GaugePointer = ({ needleSize, colors }: gaugePointerProps) => {
         x: cx + outerRadius * Math.sin(valueAngle),
         y: cy - outerRadius * Math.cos(valueAngle),
     };
-    const [stem, root] = colors;
     return (
         <g>
-            <circle cx={cx} cy={cy} r={5} fill={root} />
+            <circle cx={cx} cy={cy} r={5} fill={color} />
             <path
                 d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
-                stroke={stem}
+                stroke={color}
                 strokeWidth={needleSize}
             />
         </g>
@@ -52,7 +51,7 @@ const DefaultGauge = ({
     colors,
     temperature,
 }: defaultProps) => {
-    const [backgroundColor, secondaryColor] = colors;
+    const [backgroundColor, secondaryColor, fontColor] = colors;
 
     return (
         <GaugeContainer
@@ -61,26 +60,15 @@ const DefaultGauge = ({
             startAngle={-100}
             endAngle={100}
             value={temperature}
-            valueMin={minVal}
-            valueMax={maxVal}
-            innerRadius="65%" // thickness of the gauge
-            outerRadius="80%"
-            cornerRadius="0%" // round or sharp edges
-            sx={(theme) => ({
-                [`& .${gaugeClasses.valueText}`]: {
-                    fontSize: 40,
-                },
-                [`& .${gaugeClasses.valueArc}`]: {
-                    fill: '#52b202',
-                },
-                [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: theme.palette.text.disabled,
-                },
-            })}
+            valueMin={0}
+            valueMax={300}
+            // innerRadius="65%" // thickness of the gauge
+            // outerRadius="80%"
+            // cornerRadius="0%" // round or sharp edges
         >
             <GaugeReferenceArc style={{ fill: secondaryColor }} />
             <GaugeValueArc style={{ fill: backgroundColor }} />
-            <GaugePointer needleSize={needleSize} colors={['red', 'green']} />
+            <GaugePointer needleSize={needleSize} color={fontColor} />
         </GaugeContainer>
     );
 };

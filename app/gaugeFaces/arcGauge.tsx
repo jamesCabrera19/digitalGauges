@@ -26,8 +26,8 @@ const ArcGauge = ({ fontWeight, temperature, colors }: gaugeProps) => {
             width={200}
             height={200}
             value={temperature}
-            startAngle={-90}
-            endAngle={90}
+            startAngle={-95}
+            endAngle={95}
             text={({ value }) => `${value}`}
             sx={{
                 // background (reference) arc

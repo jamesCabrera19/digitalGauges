@@ -56,24 +56,27 @@ const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
 
     return (
         <View style={styles.container}>
-            {gaugeFace.toLowerCase() === 'arc' ||
-            gaugeFace.toLowerCase() === 'round' ? (
+            <ColorSwatchRow
+                label="Progress color"
+                colorKey="backgroundColor"
+                onPress={handlePress}
+                active={backgroundColor}
+            />
+            {gaugeFace.toLowerCase() !== 'simple' ? (
                 <ColorSwatchRow
-                    label="Fill color"
+                    label="Background color"
                     colorKey="secondaryColor"
                     onPress={handlePress}
                     active={secondaryColor}
                 />
             ) : null}
-            <ColorSwatchRow
-                label="Background color"
-                colorKey="backgroundColor"
-                onPress={handlePress}
-                active={backgroundColor}
-            />
 
             <ColorSwatchRow
-                label="Font color"
+                label={
+                    gaugeFace.toLowerCase() === 'default'
+                        ? 'Pointer Color'
+                        : 'Font color'
+                }
                 colorKey="fontColor"
                 onPress={handlePress}
                 active={fontColor}
