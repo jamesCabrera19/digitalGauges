@@ -5,17 +5,27 @@ type gaugeProps = {
     temperature: number;
     fontWeight: number;
     colors: string[];
+    actualTemperature: number;
 };
 
-const ArcGauge = ({ fontWeight, temperature, colors }: gaugeProps) => {
-    let weight = 0;
-    if (fontWeight === 3) {
-        weight = 500;
-    } else if (fontWeight === 2) {
-        weight = 100;
+const getFontSize = (size: number) => {
+    let fontWeight = 0;
+    if (size === 3) {
+        fontWeight = 500;
+    } else if (size === 2) {
+        fontWeight = 100;
     } else {
-        weight = 600;
+        fontWeight = 600;
     }
+    return fontWeight;
+};
+
+const ArcGauge = ({
+    fontWeight,
+    temperature,
+    colors,
+    actualTemperature,
+}: gaugeProps) => {
     const [backgroundColor, secondaryColor, fontColor] = colors;
     // colors[1] is actually the font color. wee need to add an additional row of colors.
     return (
@@ -42,7 +52,7 @@ const ArcGauge = ({ fontWeight, temperature, colors }: gaugeProps) => {
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
                     fill: fontColor,
-                    fontWeight: weight, // (optional) make it semibold
+                    fontWeight: getFontSize(fontWeight), // (optional) make it semibold
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },
             }}

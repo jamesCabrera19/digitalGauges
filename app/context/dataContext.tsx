@@ -4,6 +4,10 @@ type Range = {
     min: number;
     max: number;
 };
+type DangerZone = {
+    min: number;
+    max: number;
+};
 type State = {
     other: string;
     backgroundColor: string;
@@ -11,6 +15,7 @@ type State = {
     fontColor: string;
     style: string;
     range: Range;
+    dangerZone: DangerZone;
     needleSize: number;
     gaugeType: string;
     unit: 'C' | 'F';
@@ -40,7 +45,10 @@ const initialState: State = {
     secondaryColor: '#ffbf00',
     fontColor: '#ffffff',
     style: 'normal',
-    range: { min: 50, max: 260 },
+    range: { min: 0, max: 300 },
+    //
+    dangerZone: { min: 250, max: 300 },
+    //
     needleSize: 3,
     gaugeType: 'Simple',
     unit: 'F',

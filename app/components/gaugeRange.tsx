@@ -10,6 +10,8 @@ import {
     gaugeClasses,
 } from '@mui/x-charts/Gauge';
 import { Slider } from '@miblanchard/react-native-slider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Range {
@@ -18,7 +20,84 @@ interface Range {
 }
 type GaugeRangeProps = {
     updateRange: (newRange: Range) => void;
-    ranges: {};
+    ranges: Range;
+};
+
+const RangeSlider = () => {
+    const [range, setRange] = useState([220, 260]);
+
+    const styles = StyleSheet.create({
+        container: {
+            backgroundColor: 'black',
+            borderRadius: 10,
+            display: 'flex',
+        },
+        label: {
+            marginBottom: 20,
+            fontSize: 16,
+            color: 'white',
+            fontWeight: 400,
+        },
+        sliderContainer: {
+            height: 40,
+        },
+        trackStyle: {
+            height: 1,
+            borderRadius: 5,
+        },
+        thumbStyle: {
+            width: 20,
+            height: 20,
+            borderRadius: 12,
+            backgroundColor: '#fff',
+            borderWidth: 0,
+            borderColor: '#0076ec',
+        },
+        textBox: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            margin: 10,
+        },
+        box: {
+            height: 40,
+            width: 40,
+            borderRadius: 10,
+            backgroundColor: '#333',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+    });
+
+    console.log(range);
+    return (
+        <View style={styles.container}>
+            <Text style={[styles.label]}>Danger Zone Limit</Text>
+            <MultiSlider
+                values={range}
+                onValuesChangeFinish={(values) => setRange(values)}
+                min={200}
+                max={320}
+                step={1}
+                sliderLength={280}
+                selectedStyle={{ backgroundColor: '#0076ec' }}
+                unselectedStyle={{ backgroundColor: '#ccc' }}
+                containerStyle={styles.sliderContainer}
+                trackStyle={styles.trackStyle}
+                customMarker={() => <View style={styles.thumbStyle} />}
+            />
+            <View style={styles.container}>
+                <View style={styles.textBox}>
+                    <View style={styles.box}>
+                        <Text style={styles.label}>{range[0]}</Text>
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.label}>{range[1]}</Text>
+                    </View>
+                </View>
+            </View>
+        </View>
+    );
 };
 
 const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
@@ -30,11 +109,11 @@ const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
         {
             title: 'Min',
             startValue: 0,
-            endingValue: 250,
+            endingValue: 360,
         },
         {
             title: 'Max',
-            startValue: 100,
+            startValue: 250,
             endingValue: 300,
         },
     ];
@@ -111,7 +190,7 @@ const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
     };
     return (
         <View style={styles.card}>
-            <Text style={[styles.text, { fontSize: 16 }]}>Red Zone Range</Text>
+            {/* <Text style={styles.label}>Range</Text>
 
             {data.map(({ title, startValue, endingValue }) => {
                 const value = title === 'Min' ? minValue : maxValue;
@@ -146,6 +225,9 @@ const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
             })}
 
             <View style={styles.container}>
+                <Text style={[styles.text, { fontSize: 16 }]}>
+                    Red Zone Range
+                </Text>
                 <View style={styles.textBox}>
                     <View style={styles.box}>
                         <Text style={styles.text}>{minValue}</Text>
@@ -154,7 +236,8 @@ const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
                         <Text style={styles.text}>{maxValue}</Text>
                     </View>
                 </View>
-            </View>
+            </View> */}
+            <RangeSlider />
         </View>
     );
 };
