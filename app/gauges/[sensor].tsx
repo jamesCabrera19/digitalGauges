@@ -70,7 +70,7 @@ export default function SensorGauge() {
                     gaugeFace={state.gaugeType}
                 />
 
-                <GaugeRange updateRange={updateRange} ranges={state.range} />
+                <GaugeRange updateRange={updateRange} range={state.range} />
                 <GaugeLabels
                     updateUnit={(val) =>
                         updateUnitDisplay(val.toUpperCase() as 'C' | 'F')

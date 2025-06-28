@@ -6,6 +6,7 @@ type gaugeProps = {
     fontWeight: number;
     colors: string[];
     actualTemperature: number;
+    range: number;
 };
 
 const getFontSize = (size: number) => {
@@ -25,6 +26,7 @@ const ArcGauge = ({
     temperature,
     colors,
     actualTemperature,
+    range,
 }: gaugeProps) => {
     const [backgroundColor, secondaryColor, fontColor] = colors;
     // colors[1] is actually the font color. wee need to add an additional row of colors.
@@ -46,7 +48,7 @@ const ArcGauge = ({
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: secondaryColor, //'#0076ec', // green value arc (left)
+                    fill: range > 250 ? '#ff1a1a' : secondaryColor, //'#0076ec', // green value arc (left)
                 },
                 // target the center-value <text> element
                 [`& .${gaugeClasses.valueText} text`]: {

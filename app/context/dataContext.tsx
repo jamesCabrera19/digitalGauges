@@ -1,9 +1,9 @@
 import createDataContext from './index';
 // types
-type Range = {
-    min: number;
-    max: number;
-};
+// type Range = {
+//     min: number;
+//     max: number;
+// };
 type DangerZone = {
     min: number;
     max: number;
@@ -14,7 +14,7 @@ type State = {
     secondaryColor: string;
     fontColor: string;
     style: string;
-    range: Range;
+    range: number;
     dangerZone: DangerZone;
     needleSize: number;
     gaugeType: string;
@@ -26,7 +26,7 @@ type Action =
           type: 'UPDATE_COLORS';
           payload: { colorKey: string; color: string };
       }
-    | { type: 'SET_RANGE'; payload: Range }
+    | { type: 'SET_RANGE'; payload: number }
     | { type: 'SET_NEEDLE'; payload: number }
     | { type: 'SET_TYPE'; payload: string }
     | { type: 'SET_UNIT'; payload: 'C' | 'F' }
@@ -41,11 +41,13 @@ const initialState: State = {
     // color: 'red',
     // gauge: 'simple',
     other: 'other',
+    // colors:[ '#000000', '#ffbf00','#ffffff',] || {}
     backgroundColor: '#000000',
     secondaryColor: '#ffbf00',
     fontColor: '#ffffff',
     style: 'normal',
-    range: { min: 0, max: 300 },
+    // range: { min: 0, max: 250 },
+    range: 250,
     //
     dangerZone: { min: 250, max: 300 },
     //
@@ -92,7 +94,7 @@ const updateData =
         const data = { colorKey, color };
         dispatch({ type: 'UPDATE_COLORS', payload: data });
     };
-const updateRange = (dispatch: Dispatch) => (range: Range) => {
+const updateRange = (dispatch: Dispatch) => (range: number) => {
     dispatch({ type: 'SET_RANGE', payload: range });
 };
 

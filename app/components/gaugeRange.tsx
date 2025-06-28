@@ -19,8 +19,8 @@ interface Range {
     max: number;
 }
 type GaugeRangeProps = {
-    updateRange: (newRange: Range) => void;
-    ranges: Range;
+    updateRange: (value: number) => void;
+    range: Range;
 };
 
 const RangeSlider = () => {
@@ -100,17 +100,10 @@ const RangeSlider = () => {
     );
 };
 
-const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
-    // min and max values
-    const [minValue, setMinValue] = useState(ranges.min); // min value Range
-    const [maxValue, setMaxValue] = useState(ranges.max); // max value Range
+const GaugeRange = ({ updateRange, range }: GaugeRangeProps) => {
+    const [currentValue, setCurrentValue] = useState(250);
 
     const data = [
-        {
-            title: 'Min',
-            startValue: 0,
-            endingValue: 360,
-        },
         {
             title: 'Max',
             startValue: 250,
@@ -178,26 +171,17 @@ const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
         },
     });
 
-    const handleValueChange = (value: number, type: string) => {
-        if (type === 'Min') {
-            setMinValue(value);
-        } else {
-            setMaxValue(value);
-        }
-
-        const data = { min: minValue, max: maxValue };
-        updateRange(data);
+    const handleValueChange = () => {
+        updateRange(currentValue);
     };
     return (
         <View style={styles.card}>
-            {/* <Text style={styles.label}>Range</Text>
+            <Text style={styles.label}>Danger Zone Limit</Text>
 
             {data.map(({ title, startValue, endingValue }) => {
-                const value = title === 'Min' ? minValue : maxValue;
-
                 return (
                     <View style={styles.buttonRow} key={title}>
-                        <Text style={styles.text}>{title}</Text>
+                        <Text style={styles.text}>{startValue}</Text>
                         <Slider
                             containerStyle={styles.sliderContainer}
                             // style the track itself
@@ -212,32 +196,36 @@ const GaugeRange = ({ updateRange, ranges }: GaugeRangeProps) => {
                             maximumValue={endingValue}
                             step={1}
                             // controlled value
-                            value={value}
+                            value={currentValue}
                             onValueChange={(raw) => {
                                 // raw: number | number[]
-                                const num = Array.isArray(raw) ? raw[0] : raw;
-                                handleValueChange(num, title);
+                                // const num = Array.isArray(raw) ? raw[0] : raw;
+                                setCurrentValue(
+                                    Array.isArray(raw) ? raw[0] : raw
+                                );
+
+                                handleValueChange();
                             }}
                         />
-                        <Text style={styles.text}>{value}</Text>
+                        <Text style={styles.text}>{endingValue}</Text>
                     </View>
                 );
             })}
 
             <View style={styles.container}>
-                <Text style={[styles.text, { fontSize: 16 }]}>
+                {/* <Text style={[styles.text, { fontSize: 16 }]}>
                     Red Zone Range
-                </Text>
+                </Text> */}
                 <View style={styles.textBox}>
-                    <View style={styles.box}>
+                    {/* <View style={styles.box}>
                         <Text style={styles.text}>{minValue}</Text>
-                    </View>
+                    </View> */}
                     <View style={styles.box}>
-                        <Text style={styles.text}>{maxValue}</Text>
+                        <Text style={styles.text}>{currentValue}</Text>
                     </View>
                 </View>
-            </View> */}
-            <RangeSlider />
+            </View>
+            {/* <RangeSlider /> */}
         </View>
     );
 };

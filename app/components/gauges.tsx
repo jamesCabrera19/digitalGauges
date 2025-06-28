@@ -10,11 +10,11 @@ type GaugeProps = {
     needleSize: number;
     gaugeType: string;
     unit: 'C' | 'F';
-    range: { min: number; max: number };
+    range: number;
     colors: string[];
 };
 
-const Gauges = ({ needleSize, gaugeType, unit, range, colors }: GaugeProps) => {
+const Gauges = ({ needleSize, gaugeType, unit, colors, range }: GaugeProps) => {
     // Sample temperature reading in Fahrenheit
     const CURRENT_TEMPERATURE = 220;
 
@@ -44,8 +44,6 @@ const Gauges = ({ needleSize, gaugeType, unit, range, colors }: GaugeProps) => {
     // Destructure color values from array (e.g., [background, secondary, font])
     const [backgroundColor, secondaryColor, fontColor] = colors;
 
-    console.log(range);
-
     switch (gaugeType.toLowerCase()) {
         case 'arc':
             return (
@@ -54,6 +52,7 @@ const Gauges = ({ needleSize, gaugeType, unit, range, colors }: GaugeProps) => {
                     actualTemperature={currentTemp}
                     fontWeight={needleSize}
                     colors={[backgroundColor, secondaryColor, fontColor]}
+                    range={range}
                 />
             );
         case 'round':
