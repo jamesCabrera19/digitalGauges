@@ -8,8 +8,15 @@ type DangerZone = {
     min: number;
     max: number;
 };
+// type Colors = {
+//     backgroundColor: string;
+//     secondaryColor: string;
+//     fontColor: string;
+// };
 type State = {
     other: string;
+    // colors: Colors;
+
     backgroundColor: string;
     secondaryColor: string;
     fontColor: string;
@@ -38,10 +45,12 @@ type Dispatch = (action: Action) => void;
 
 // Initial State
 const initialState: State = {
-    // color: 'red',
-    // gauge: 'simple',
     other: 'other',
-    // colors:[ '#000000', '#ffbf00','#ffffff',] || {}
+    // colors: {
+    //     backgroundColor: '#000000',
+    //     secondaryColor: '#ffbf00',
+    //     fontColor: '#ffffff',
+    // },
     backgroundColor: '#000000',
     secondaryColor: '#ffbf00',
     fontColor: '#ffffff',

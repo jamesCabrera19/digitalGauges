@@ -53,8 +53,8 @@ const ArcGauge = ({
                 // target the center-value <text> element
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
-                    fill: fontColor,
-                    fontWeight: getFontSize(fontWeight), // (optional) make it semibold
+                    fill: range > 250 ? '#ff1a1a' : fontColor,
+                    fontWeight: range > 250 ? 600 : getFontSize(fontWeight), // (optional) make it semibold
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },
             }}
