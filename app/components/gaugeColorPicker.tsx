@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Context as DataContext } from '../context/dataContext';
 
 const COLOR_OPTIONS = [
@@ -52,10 +52,63 @@ const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
     const handlePress = (colorKey: string, color: string) => {
         updateColor(colorKey, color);
     };
+
     const [backgroundColor, fontColor, secondaryColor] = colors;
+
+    //
+    const [selectedTarget, setSelectedTarget] = useState<
+        'background' | 'foreground' | 'text'
+    >('background');
+
+    const [themeColors, setThemeColors] = useState({
+        background: backgroundColor,
+        foreground: secondaryColor,
+        text: fontColor,
+    });
+
+    const handleColorChange = (target: string, color: string) => {
+        console.log(target);
+        setThemeColors((prev) => ({ ...prev, [target]: color }));
+    };
+
+    //
 
     return (
         <View style={styles.container}>
+            {/*  */}
+            <View
+                style={{
+                    flexDirection: 'row', // lay children out horizontally
+                    justifyContent: 'space-around', // distribute space evenly
+                    alignItems: 'center', // vertically center buttons
+                    marginTop: 8, // a bit of breathing room under the text
+                }}
+            >
+                <Button
+                    title="Background"
+                    onPress={() => handleColorChange('background', 'red')}
+                    // disabled={state ? false : true}
+                />
+                <Button
+                    title="Foreground"
+                    onPress={() => handleColorChange('foreground', 'green')}
+                    // disabled={state ? false : true}
+                />
+                <Button
+                    title="Font Color"
+                    onPress={() => handleColorChange('text', 'blue')}
+                    // disabled={state ? false : true}
+                />
+            </View>
+            <Text style={{ color: themeColors.background }}>
+                {themeColors.background}
+            </Text>
+            <Text style={{ color: themeColors.foreground }}>
+                {themeColors.foreground}
+            </Text>
+            <Text style={{ color: themeColors.text }}>{themeColors.text} </Text>
+
+            {/*  */}
             <ColorSwatchRow
                 label="Progress color"
                 colorKey="backgroundColor"
@@ -70,7 +123,6 @@ const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
                     active={secondaryColor}
                 />
             ) : null}
-
             <ColorSwatchRow
                 label={
                     gaugeFace.toLowerCase() === 'default'
