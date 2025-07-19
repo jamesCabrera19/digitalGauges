@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link } from 'expo-router';
 import {
     View,
     FlatList,
@@ -7,13 +7,15 @@ import {
     StatusBar,
     Pressable,
     Button,
-} from "react-native";
-import { ReactNode } from "react";
-import { useRouter } from "expo-router";
-
-import SensorContainer from "../gauges";
+} from 'react-native';
+import { ReactNode } from 'react';
+import { useRouter } from 'expo-router';
+import { useWebSocket } from '../hooks/useWebSocket';
+import SensorContainer from '../gauges';
 
 export default function Index() {
+    const { ws, serverMessages, serverState, sendMessage } = useWebSocket();
+
     return (
         <View style={styles.container}>
             <SensorContainer />
@@ -24,16 +26,16 @@ export default function Index() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#25292e",
-        alignItems: "center",
-        justifyContent: "center",
+        backgroundColor: '#25292e',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     text: {
-        color: "#fff",
+        color: '#fff',
     },
     button: {
         fontSize: 20,
-        textDecorationLine: "underline",
-        color: "#fff",
+        textDecorationLine: 'underline',
+        color: '#fff',
     },
 });
