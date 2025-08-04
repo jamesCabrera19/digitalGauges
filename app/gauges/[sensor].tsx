@@ -64,8 +64,8 @@ export default function SensorGauge() {
                     updateColor={updateData}
                     colors={[
                         state.backgroundColor,
-                        state.fontColor,
                         state.secondaryColor,
+                        state.fontColor,
                     ]}
                     gaugeFace={state.gaugeType}
                 />

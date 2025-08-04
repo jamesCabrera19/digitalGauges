@@ -61,17 +61,17 @@ const Gauges = ({ needleSize, gaugeType, unit, colors, range }: GaugeProps) => {
                     temperature={currentTemp}
                     needleSize={needleSize}
                     colors={[backgroundColor, secondaryColor, fontColor]}
-                    range={range}
+                    // range={range}
                 />
             );
         case 'simple':
             return (
                 <SimpleGauge
                     temperature={roundToTwo(currentTemp)}
-                    colors={[backgroundColor, fontColor]}
+                    colors={[backgroundColor, secondaryColor, fontColor]}
                     unit={unit}
                     needleSize={needleSize}
-                    range={range}
+                    // range={range}
                 />
             );
         default:
@@ -82,7 +82,7 @@ const Gauges = ({ needleSize, gaugeType, unit, colors, range }: GaugeProps) => {
                     minVal={0} // start value of gauge
                     maxVal={300} // max value of gauge
                     needleSize={needleSize}
-                    range={range}
+                    // range={range}
                 />
             );
     }

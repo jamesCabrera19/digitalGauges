@@ -44,11 +44,11 @@ const ArcGauge = ({
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: backgroundColor, //'#e0e0e0', // white part,(right)
+                    fill: secondaryColor, //'#e0e0e0', // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: range > 250 ? '#ff1a1a' : secondaryColor, //'#0076ec', // green value arc (left)
+                    fill: range > 250 ? '#ff1a1a' : backgroundColor, //'#0076ec', // green value arc (left)
                 },
                 // target the center-value <text> element
                 [`& .${gaugeClasses.valueText} text`]: {

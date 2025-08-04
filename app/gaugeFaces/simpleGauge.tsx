@@ -18,7 +18,7 @@ const SimpleGauge = ({ temperature, unit, needleSize, colors }: gaugeProps) => {
         weight = 600;
     }
 
-    const [backgroundColor, fontColor] = colors;
+    const [backgroundColor, secondaryColor, fontColor] = colors;
 
     return (
         <View
@@ -32,16 +32,28 @@ const SimpleGauge = ({ temperature, unit, needleSize, colors }: gaugeProps) => {
                 alignItems: 'center',
             }}
         >
-            <Text
+            <View
                 style={{
-                    fontWeight: weight,
-                    fontSize: 40,
-                    color: fontColor,
-                    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+                    backgroundColor: secondaryColor,
+                    width: 165,
+                    height: 165,
+                    borderRadius: 100,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
-                {temperature}° {unit}
-            </Text>
+                <Text
+                    style={{
+                        fontWeight: weight,
+                        fontSize: 40,
+                        color: fontColor,
+                        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+                    }}
+                >
+                    {temperature}° {unit}
+                </Text>
+            </View>
         </View>
     );
 };

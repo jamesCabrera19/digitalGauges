@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Context as DataContext } from '../context/dataContext';
 
-const COLOR_OPTIONS = [
+const THEME_COLORS = [
     '#ff1a1a', // BMW Classic Red
     '#3399ff', // VW Blue
     '#ffbf00', // Lexus Amber
@@ -28,21 +28,23 @@ type Props = {
 const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
     return (
         <View style={styles.rowContainer}>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={styles.label}> {label}</Text>
             <View style={styles.swatchRow}>
-                {COLOR_OPTIONS.map((color) => (
-                    <TouchableOpacity
-                        key={color}
-                        onPress={() => onPress(colorKey, color)}
-                        style={[
-                            styles.swatch,
-                            {
-                                backgroundColor: color,
-                                borderWidth: active === color ? 3 : 0,
-                            },
-                        ]}
-                    />
-                ))}
+                {THEME_COLORS.map((color) => {
+                    return (
+                        <TouchableOpacity
+                            key={color}
+                            onPress={() => onPress(colorKey, color)}
+                            style={[
+                                styles.swatch,
+                                {
+                                    backgroundColor: color,
+                                    borderWidth: active === color ? 3 : 0,
+                                },
+                            ]}
+                        />
+                    );
+                })}
             </View>
         </View>
     );
@@ -53,86 +55,40 @@ const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
         updateColor(colorKey, color);
     };
 
-    const [backgroundColor, fontColor, secondaryColor] = colors;
+    const [backgroundColor, secondaryColor, fontColor] = colors;
+    console.log(gaugeFace);
 
-    //
-    const [selectedTarget, setSelectedTarget] = useState<
-        'background' | 'foreground' | 'text'
-    >('background');
-
-    const [themeColors, setThemeColors] = useState({
-        background: backgroundColor,
-        foreground: secondaryColor,
-        text: fontColor,
-    });
-
-    const handleColorChange = (target: string, color: string) => {
-        console.log(target);
-        setThemeColors((prev) => ({ ...prev, [target]: color }));
-    };
-
-    //
+    const swatches = [
+        {
+            label: 'Foreground color',
+            key: 'backgroundColor',
+            activeColor: backgroundColor,
+        },
+        {
+            label: 'Background color',
+            key: 'secondaryColor',
+            activeColor: secondaryColor,
+        },
+        {
+            label: gaugeFace == 'Default' ? 'Pointer color' : 'Font color',
+            key: 'fontColor',
+            activeColor: fontColor,
+        },
+    ];
 
     return (
+        //
+
         <View style={styles.container}>
             {/*  */}
-            <View
-                style={{
-                    flexDirection: 'row', // lay children out horizontally
-                    justifyContent: 'space-around', // distribute space evenly
-                    alignItems: 'center', // vertically center buttons
-                    marginTop: 8, // a bit of breathing room under the text
-                }}
-            >
-                <Button
-                    title="Background"
-                    onPress={() => handleColorChange('background', 'red')}
-                    // disabled={state ? false : true}
-                />
-                <Button
-                    title="Foreground"
-                    onPress={() => handleColorChange('foreground', 'green')}
-                    // disabled={state ? false : true}
-                />
-                <Button
-                    title="Font Color"
-                    onPress={() => handleColorChange('text', 'blue')}
-                    // disabled={state ? false : true}
-                />
-            </View>
-            <Text style={{ color: themeColors.background }}>
-                {themeColors.background}
-            </Text>
-            <Text style={{ color: themeColors.foreground }}>
-                {themeColors.foreground}
-            </Text>
-            <Text style={{ color: themeColors.text }}>{themeColors.text} </Text>
-
-            {/*  */}
-            <ColorSwatchRow
-                label="Progress color"
-                colorKey="backgroundColor"
-                onPress={handlePress}
-                active={backgroundColor}
-            />
-            {gaugeFace.toLowerCase() !== 'simple' ? (
+            {swatches.map((el) => (
                 <ColorSwatchRow
-                    label="Background color"
-                    colorKey="secondaryColor"
+                    label={el.label}
+                    colorKey={el.key}
+                    active={el.activeColor}
                     onPress={handlePress}
-                    active={secondaryColor}
                 />
-            ) : null}
-            <ColorSwatchRow
-                label={
-                    gaugeFace.toLowerCase() === 'default'
-                        ? 'Pointer Color'
-                        : 'Font color'
-                }
-                colorKey="fontColor"
-                onPress={handlePress}
-                active={fontColor}
-            />
+            ))}
         </View>
     );
 };

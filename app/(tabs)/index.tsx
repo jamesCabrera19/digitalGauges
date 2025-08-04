@@ -16,6 +16,7 @@ import SensorContainer from '../gauges';
 export default function Index() {
     const { ws, serverMessages, serverState, sendMessage } = useWebSocket();
 
+    // console.log(ws);
     return (
         <View style={styles.container}>
             <SensorContainer />

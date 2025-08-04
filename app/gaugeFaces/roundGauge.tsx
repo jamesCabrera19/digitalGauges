@@ -32,11 +32,11 @@ const RoundGauge = ({ temperature, needleSize, colors }: gaugeProps) => {
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: backgroundColor, // white part,(right)
+                    fill: secondaryColor, // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: secondaryColor, // green value arc (left)
+                    fill: backgroundColor, // green value arc (left)
                 },
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
