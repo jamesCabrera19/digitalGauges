@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Context as DataContext } from '../context/dataContext';
 
-const THEME_COLORS = [
+const AVAILABLE_GAUGE_COLORS = [
     '#ff1a1a', // BMW Classic Red
     '#3399ff', // VW Blue
     '#ffbf00', // Lexus Amber
@@ -10,83 +10,94 @@ const THEME_COLORS = [
     '#000000',
     '#ffffff', // Porsche White
     '#ff0000', // Dodge Red
-    // '#ffbf00' green
 ];
 
-type colorProps = {
+type ColorSwatchRowProps = {
     label: string;
     onPress: (key: string, color: string) => void;
     active: string;
     colorKey: string;
 };
-type Props = {
+
+type GaugeColorPickerProps = {
     updateColor: (key: string, color: string) => void;
     colors: string[];
     gaugeFace: string;
 };
 
-const ColorSwatchRow = ({ label, active, colorKey, onPress }: colorProps) => {
+type ColorSwatchProps = {
+    color: string;
+};
+
+const ColorSwatchRow = ({
+    label,
+    active,
+    colorKey,
+    onPress,
+}: ColorSwatchRowProps) => {
+    const ColorSwatch = ({ color }: ColorSwatchProps) => (
+        <TouchableOpacity
+            key={color}
+            onPress={() => onPress(colorKey, color)}
+            style={[
+                styles.swatch,
+                {
+                    backgroundColor: color,
+                    borderWidth: active === color ? 3 : 0,
+                },
+            ]}
+        />
+    );
+
     return (
         <View style={styles.rowContainer}>
-            <Text style={styles.label}> {label}</Text>
+            <Text style={styles.label}>{label}</Text>
             <View style={styles.swatchRow}>
-                {THEME_COLORS.map((color) => {
-                    return (
-                        <TouchableOpacity
-                            key={color}
-                            onPress={() => onPress(colorKey, color)}
-                            style={[
-                                styles.swatch,
-                                {
-                                    backgroundColor: color,
-                                    borderWidth: active === color ? 3 : 0,
-                                },
-                            ]}
-                        />
-                    );
-                })}
+                {AVAILABLE_GAUGE_COLORS.map((color) => (
+                    <ColorSwatch color={color} />
+                ))}
             </View>
         </View>
     );
 };
 
-const GaugeColorPicker = ({ updateColor, colors, gaugeFace }: Props) => {
-    const handlePress = (colorKey: string, color: string) => {
+const GaugeColorPicker = ({
+    updateColor,
+    colors,
+    gaugeFace,
+}: GaugeColorPickerProps) => {
+    const handleColorSelection = (colorKey: string, color: string) => {
         updateColor(colorKey, color);
     };
 
-    const [backgroundColor, secondaryColor, fontColor] = colors;
-    console.log(gaugeFace);
+    const [foregroundColorValue, backgroundColorValue, textColorValue] = colors;
 
-    const swatches = [
+    const colorOptions = [
         {
             label: 'Foreground color',
             key: 'backgroundColor',
-            activeColor: backgroundColor,
+            activeColor: foregroundColorValue,
         },
         {
             label: 'Background color',
             key: 'secondaryColor',
-            activeColor: secondaryColor,
+            activeColor: backgroundColorValue,
         },
         {
-            label: gaugeFace == 'Default' ? 'Pointer color' : 'Font color',
+            label: gaugeFace === 'Default' ? 'Pointer color' : 'Font color',
             key: 'fontColor',
-            activeColor: fontColor,
+            activeColor: textColorValue,
         },
     ];
 
     return (
-        //
-
         <View style={styles.container}>
-            {/*  */}
-            {swatches.map((el) => (
+            {colorOptions.map((option) => (
                 <ColorSwatchRow
-                    label={el.label}
-                    colorKey={el.key}
-                    active={el.activeColor}
-                    onPress={handlePress}
+                    label={option.label}
+                    colorKey={option.key}
+                    active={option.activeColor}
+                    onPress={handleColorSelection}
                 />
             ))}
         </View>
@@ -116,8 +127,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     swatch: {
-        height: 36,
-        width: 36,
+        height: 30,
+        width: 30,
         borderRadius: 18,
         borderColor: 'yellow',
     },

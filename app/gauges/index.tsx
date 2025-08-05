@@ -7,7 +7,7 @@ import {
     Pressable,
     Button,
 } from 'react-native';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { useRouter, Link } from 'expo-router';
 import { Context as DataContext } from '../context/dataContext';
 
@@ -44,41 +44,55 @@ const sensors = [
 type props = {
     name: string;
     val: number;
-    route: string;
+    route: () => void;
     status: boolean;
 };
+
+const Item = ({ name, val, route, status }: props) => (
+    <Pressable
+        style={styles.item}
+        onPress={() => route()}
+        onLongPress={() => console.log('Long pressed', name)}
+    >
+        {status ? (
+            <View
+                style={{
+                    height: 10,
+                    width: 10,
+                    backgroundColor: 'yellow',
+                    borderRadius: 5,
+                }}
+            />
+        ) : (
+            <View
+                style={{
+                    height: 10,
+                    width: 10,
+                    backgroundColor: 'red',
+                    borderRadius: 5,
+                }}
+            />
+        )}
+        <Text style={{ fontSize: 20, color: 'white' }}>{name}</Text>
+        <Text style={{ fontSize: 50, color: 'white' }}>{val} </Text>
+    </Pressable>
+);
+
 const SensorContainer = () => {
     const router = useRouter();
     const { state } = useContext(DataContext);
+    const [active, setActive] = useState(false);
 
-    const Item = ({ name, val, route, status }: props) => (
-        <Pressable
-            style={styles.item}
-            onPress={() => router.push(`/gauges/${route}`)}
-        >
-            {status ? (
-                <View
-                    style={{
-                        height: 10,
-                        width: 10,
-                        backgroundColor: 'yellow',
-                        borderRadius: 5,
-                    }}
-                />
-            ) : (
-                <View
-                    style={{
-                        height: 10,
-                        width: 10,
-                        backgroundColor: 'red',
-                        borderRadius: 5,
-                    }}
-                />
-            )}
-            <Text style={{ fontSize: 20, color: 'white' }}>{name}</Text>
-            <Text style={{ fontSize: 50, color: 'white' }}>{val} </Text>
-        </Pressable>
-    );
+    const handleLongPress = (id: string) => {};
+
+    const addSensor = () => {
+        // enter IP? or scan for devices?
+        // trigger a form and ask for this info
+        // add name
+        // unit preference
+        // min max range
+        // positon
+    };
 
     return (
         <View style={styles.container}>
@@ -88,10 +102,13 @@ const SensorContainer = () => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     marginHorizontal: 10,
+                    padding: 10,
                 }}
             >
-                <Text style={{ fontSize: 30, color: 'white' }}>GAUGES</Text>
-                <Button title="+" onPress={() => console.log('Add sensor')} />
+                <Button
+                    title="Add +"
+                    onPress={() => console.log('Add sensor')}
+                />
             </View>
 
             <FlatList
@@ -100,7 +117,7 @@ const SensorContainer = () => {
                     <Item
                         name={item.name}
                         val={item.value}
-                        route={item.route}
+                        route={() => router.push(`/gauges/${item.route}`)}
                         status={item.active}
                     />
                 )}
