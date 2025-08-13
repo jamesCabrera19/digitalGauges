@@ -1,4 +1,4 @@
-import { useState, useReducer, useContext } from 'react';
+import { useState, useReducer, useContext } from "react";
 import {
     View,
     Text,
@@ -6,19 +6,19 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
-} from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Context as DataContext } from '../context/dataContext';
+import { Context as DataContext } from "../context/dataContext";
 //
-import GaugeLabels from '../components/gaugeLabels';
-import Gauges from '../components/gauges';
-import GaugeStyle from '../components/gaugeStyle';
-import GaugeNeedle from '../components/gaugeNeedle';
-import GaugeRange from '../components/gaugeRange';
-import GaugeUnitComponent from '../components/gaugeUnitComponent';
-import GaugeColorPicker from '../components/gaugeColorPicker';
+import GaugeLabels from "../components/gaugeLabels";
+import Gauges from "../components/gauges";
+import GaugeStyle from "../components/gaugeStyle";
+import GaugeNeedle from "../components/gaugeNeedle";
+import GaugeRange from "../components/gaugeRange";
+import GaugeUnitComponent from "../components/gaugeUnitComponent";
+import GaugeColorPicker from "../components/gaugeColorPicker";
 
 export default function SensorGauge() {
     const { sensor } = useLocalSearchParams<{ sensor: string }>();
@@ -35,6 +35,7 @@ export default function SensorGauge() {
 
     const saveChanges = () => sendData({ ...state });
 
+    console.log(state);
     return (
         <ScrollView
             contentContainerStyle={styles.scrollContent}
@@ -70,11 +71,15 @@ export default function SensorGauge() {
                     gaugeFace={state.gaugeType}
                 />
 
-                <GaugeRange updateRange={updateRange} range={state.range} />
+                <GaugeRange
+                    updateRange={updateRange}
+                    range={state.range}
+                    unit={state.unit}
+                />
 
                 <GaugeLabels
                     updateUnit={(val) =>
-                        updateUnitDisplay(val.toUpperCase() as 'C' | 'F')
+                        updateUnitDisplay(val.toUpperCase() as "C" | "F")
                     }
                 />
 
@@ -92,38 +97,38 @@ export default function SensorGauge() {
 const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1, // allows content to grow beyond the viewport
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         padding: 16, // optional padding around your content
     },
     screen: {
         flex: 1,
-        backgroundColor: '#25292e',
+        backgroundColor: "#25292e",
     },
     container: {
         width: 350, // your fixed width
 
-        backgroundColor: '#292e34',
+        backgroundColor: "#292e34",
         borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         paddingBottom: 30,
     },
 
     card: {
         width: 300,
-        backgroundColor: 'black',
+        backgroundColor: "black",
         borderRadius: 10,
         padding: 10,
         margin: 10,
     },
     label: {
-        color: 'white',
+        color: "white",
     },
     footer: {
-        flexDirection: 'row', // lay children out horizontally
-        justifyContent: 'space-around', // distribute space evenly
-        alignItems: 'center', // vertically center buttons
+        flexDirection: "row", // lay children out horizontally
+        justifyContent: "space-around", // distribute space evenly
+        alignItems: "center", // vertically center buttons
         marginTop: 8, // a bit of breathing room under the text
     },
 });

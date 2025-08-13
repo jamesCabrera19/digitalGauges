@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { useState } from "react";
+import { View, Text, Button, StyleSheet, TextInput } from "react-native";
 
 type gaugeProps = {
     temperature: number;
@@ -34,23 +34,23 @@ const SimpleGauge = ({
                 width: 200,
                 height: 200,
                 borderRadius: 100,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
             }}
         >
             <View
                 style={{
                     backgroundColor:
                         temperature > operatingLimit
-                            ? '#ff1a1a'
-                            : secondaryColor,
+                            ? "#ff1a1a"
+                            : backgroundColor,
                     width: 165,
                     height: 165,
                     borderRadius: 100,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                 }}
             >
                 <Text
@@ -59,9 +59,9 @@ const SimpleGauge = ({
                         fontSize: 40,
                         color:
                             temperature > operatingLimit
-                                ? '#ff1a1a'
+                                ? "#ff1a1a"
                                 : fontColor,
-                        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+                        fontFamily: "Roboto, Helvetica, Arial, sans-serif",
                     }}
                 >
                     {temperature}° {unit}
