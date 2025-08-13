@@ -2,11 +2,11 @@ import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 
 // shared // shared
 type gaugeProps = {
-    temperature: number;
+    temperatureProgress: number;
     fontWeight: number;
     colors: string[];
     actualTemperature: number;
-    range: number;
+    operatingLimit: number;
 };
 
 const getFontSize = (size: number) => {
@@ -22,14 +22,15 @@ const getFontSize = (size: number) => {
 };
 
 const ArcGauge = ({
-    fontWeight,
-    temperature,
-    colors,
+    temperatureProgress,
     actualTemperature,
-    range,
+    fontWeight,
+    colors,
+    operatingLimit,
 }: gaugeProps) => {
     const [backgroundColor, secondaryColor, fontColor] = colors;
     // colors[1] is actually the font color. wee need to add an additional row of colors.
+
     return (
         <Gauge
             // cx={0}
@@ -37,24 +38,41 @@ const ArcGauge = ({
             outerRadius={'90%'} // size increase
             width={200}
             height={200}
-            value={temperature}
+            value={temperatureProgress}
             startAngle={-95}
             endAngle={95}
-            text={({ value }) => `${value}`}
+            // percentage based value
+            // text={({ value }) => `${value}`}
+
+            // percentage based value / max value
+            // text={({ value, valueMax }) => `${value} / ${valueMax}`}
+
+            // actual value
+            text={() => `${actualTemperature}°`}
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: secondaryColor, //'#e0e0e0', // white part,(right)
+                    // override color if temperature is more than the range
+                    fill:
+                        actualTemperature > operatingLimit
+                            ? '#ff1a1a'
+                            : secondaryColor, //'#e0e0e0', // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: range > 250 ? '#ff1a1a' : backgroundColor, //'#0076ec', // green value arc (left)
+                    fill: backgroundColor, //'#0076ec', // green value arc (left)
                 },
                 // target the center-value <text> element
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
-                    fill: range > 250 ? '#ff1a1a' : fontColor,
-                    fontWeight: range > 250 ? 600 : getFontSize(fontWeight), // (optional) make it semibold
+                    fill:
+                        actualTemperature > operatingLimit
+                            ? '#ff1a1a'
+                            : fontColor,
+                    fontWeight:
+                        actualTemperature > operatingLimit
+                            ? 600
+                            : getFontSize(fontWeight), // (optional) make it semibold
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },
             }}

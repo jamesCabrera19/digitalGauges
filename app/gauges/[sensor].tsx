@@ -71,6 +71,7 @@ export default function SensorGauge() {
                 />
 
                 <GaugeRange updateRange={updateRange} range={state.range} />
+
                 <GaugeLabels
                     updateUnit={(val) =>
                         updateUnitDisplay(val.toUpperCase() as 'C' | 'F')
@@ -78,11 +79,9 @@ export default function SensorGauge() {
                 />
 
                 <View style={styles.footer}>
-                    <Button title="Reset" color="red" onPress={handleReset} />
-                    <Button
-                        title="Save Data"
-                        color="blue"
-                        onPress={saveChanges}
+                    <GaugeUnitComponent
+                        save={saveChanges}
+                        reset={handleReset}
                     />
                 </View>
             </View>

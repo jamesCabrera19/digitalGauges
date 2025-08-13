@@ -70,6 +70,12 @@ const GaugeColorPicker = ({
         updateColor(colorKey, color);
     };
 
+    const [state, setState] = useState({
+        label: 'Foreground color',
+        key: 'backgroundColor',
+        activeColor: 'red',
+    });
+
     const [foregroundColorValue, backgroundColorValue, textColorValue] = colors;
 
     const colorOptions = [
@@ -90,16 +96,41 @@ const GaugeColorPicker = ({
         },
     ];
 
+    const handlePress = (key: string) => {
+        setState(colorOptions.filter((el) => el.key === key)[0]);
+    };
+
+    console.log(state);
     return (
         <View style={styles.container}>
+            {/* <ColorSwatchRow
+                label={state.label}
+                colorKey={state.key}
+                active={state.activeColor}
+                onPress={handleColorSelection}
+            /> */}
+
             {colorOptions.map((option) => (
-                <ColorSwatchRow
-                    label={option.label}
-                    colorKey={option.key}
-                    active={option.activeColor}
-                    onPress={handleColorSelection}
-                />
+                <>
+                    <TouchableOpacity
+                        onPress={() => handlePress(option.key)}
+                        style={{
+                            borderWidth: 1,
+                            borderColor: 'white',
+                            padding: 5,
+                            backgroundColor: 'skyblue',
+                        }}
+                    >
+                        <Text style={{ color: 'white' }}>{option.label}</Text>
+                    </TouchableOpacity>
+                </>
             ))}
+            <ColorSwatchRow
+                label={state.label}
+                colorKey={state.key}
+                active={state.activeColor}
+                onPress={handleColorSelection}
+            />
         </View>
     );
 };

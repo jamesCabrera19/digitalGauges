@@ -4,9 +4,15 @@ type gaugeProps = {
     temperature: number;
     needleSize: number;
     colors: string[];
+    operatingLimit: number;
 };
 
-const RoundGauge = ({ temperature, needleSize, colors }: gaugeProps) => {
+const RoundGauge = ({
+    temperature,
+    needleSize,
+    colors,
+    operatingLimit,
+}: gaugeProps) => {
     let weight = 0;
 
     if (needleSize === 3) {
@@ -28,11 +34,14 @@ const RoundGauge = ({ temperature, needleSize, colors }: gaugeProps) => {
             valueMax={300}
             startAngle={-180} // must be match and opposite of endAngle
             endAngle={180}
-            text={({ value }) => `${value}`}
+            text={({ value }) => `${value}°`}
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: secondaryColor, // white part,(right)
+                    fill:
+                        temperature > operatingLimit
+                            ? '#ff1a1a'
+                            : secondaryColor, // white part,(right)
                 },
                 // foreground (value) arc
                 [`& .${gaugeClasses.valueArc}`]: {
@@ -40,7 +49,7 @@ const RoundGauge = ({ temperature, needleSize, colors }: gaugeProps) => {
                 },
                 [`& .${gaugeClasses.valueText} text`]: {
                     fontSize: '32px', // make the number bigger
-                    fill: fontColor, // (optional) change color
+                    fill: temperature > operatingLimit ? '#ff1a1a' : fontColor, // (optional) change color
                     fontWeight: weight, // (optional) make it semibold
                     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                 },

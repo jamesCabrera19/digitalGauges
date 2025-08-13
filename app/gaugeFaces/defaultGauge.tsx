@@ -14,6 +14,7 @@ type defaultProps = {
     needleSize: number;
     colors: string[];
     temperature: number;
+    operatingLimit: number;
 };
 type gaugePointerProps = {
     needleSize: number;
@@ -50,9 +51,11 @@ const DefaultGauge = ({
     needleSize,
     colors,
     temperature,
+    operatingLimit,
 }: defaultProps) => {
     const [backgroundColor, secondaryColor, fontColor] = colors;
 
+    //
     return (
         <GaugeContainer
             width={200}
@@ -66,9 +69,19 @@ const DefaultGauge = ({
             // outerRadius="80%"
             // cornerRadius="0%" // round or sharp edges
         >
-            <GaugeReferenceArc style={{ fill: secondaryColor }} />
+            <GaugeReferenceArc
+                style={{
+                    fill:
+                        temperature > operatingLimit
+                            ? '#ff1a1a'
+                            : secondaryColor,
+                }}
+            />
             <GaugeValueArc style={{ fill: backgroundColor }} />
-            <GaugePointer needleSize={needleSize} color={fontColor} />
+            <GaugePointer
+                needleSize={needleSize}
+                color={temperature > operatingLimit ? '#ff1a1a' : fontColor}
+            />
         </GaugeContainer>
     );
 };

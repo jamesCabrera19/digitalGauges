@@ -6,9 +6,16 @@ type gaugeProps = {
     unit: string;
     needleSize: number; // 2,3,5
     colors: string[];
+    operatingLimit: number;
 };
 
-const SimpleGauge = ({ temperature, unit, needleSize, colors }: gaugeProps) => {
+const SimpleGauge = ({
+    temperature,
+    unit,
+    needleSize,
+    colors,
+    operatingLimit,
+}: gaugeProps) => {
     let weight = 400;
     if (needleSize === 2) {
         weight = 100;
@@ -34,7 +41,10 @@ const SimpleGauge = ({ temperature, unit, needleSize, colors }: gaugeProps) => {
         >
             <View
                 style={{
-                    backgroundColor: secondaryColor,
+                    backgroundColor:
+                        temperature > operatingLimit
+                            ? '#ff1a1a'
+                            : secondaryColor,
                     width: 165,
                     height: 165,
                     borderRadius: 100,
@@ -47,7 +57,10 @@ const SimpleGauge = ({ temperature, unit, needleSize, colors }: gaugeProps) => {
                     style={{
                         fontWeight: weight,
                         fontSize: 40,
-                        color: fontColor,
+                        color:
+                            temperature > operatingLimit
+                                ? '#ff1a1a'
+                                : fontColor,
                         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
                     }}
                 >

@@ -61,7 +61,7 @@ const initialState: State = {
     dangerZone: { min: 250, max: 300 },
     //
     needleSize: 3,
-    gaugeType: 'Simple',
+    gaugeType: 'Default', // Default, Round, Arc, Simple
     unit: 'F',
 };
 //Reducer
@@ -103,6 +103,7 @@ const updateData =
         const data = { colorKey, color };
         dispatch({ type: 'UPDATE_COLORS', payload: data });
     };
+
 const updateRange = (dispatch: Dispatch) => (range: number) => {
     dispatch({ type: 'SET_RANGE', payload: range });
 };

@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import {
+    View,
+    Text,
+    Button,
+    StyleSheet,
+    TouchableOpacity,
+    Pressable,
+} from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -12,6 +19,7 @@ const GaugeUnitComponent = ({ reset, save }: gaugeUnitProps) => {
     return (
         <View style={styles.container}>
             <Button title="Reset" color={'red'} onPress={reset} />
+
             <Button title="Save Data" color={'blue'} onPress={save} />
         </View>
     );
