@@ -11,7 +11,7 @@ import { ReactNode, useContext, useState } from 'react';
 import { useRouter, Link } from 'expo-router';
 import { Context as DataContext } from '../context/dataContext';
 
-const sensors = [
+export const sensors = [
     {
         name: 'Coolant Temp',
         id: 123,
@@ -117,7 +117,7 @@ const SensorContainer = () => {
                     <Item
                         name={item.name}
                         val={item.value}
-                        route={() => router.push(`/gauges/${item.route}`)}
+                        route={() => router.push(`/gauges/${item.id}`)}
                         status={item.active}
                     />
                 )}

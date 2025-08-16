@@ -17,7 +17,14 @@ type gaugeUnitProps = {
 
 const GaugeUnitComponent = ({ reset, save }: gaugeUnitProps) => {
     return (
-        <View style={styles.container}>
+        <View
+            style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: 200,
+                justifyContent: 'space-between',
+            }}
+        >
             <Button title="Reset" color={'red'} onPress={reset} />
 
             <Button title="Save Data" color={'blue'} onPress={save} />

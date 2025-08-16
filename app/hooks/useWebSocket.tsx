@@ -23,7 +23,7 @@ export const useWebSocket = () => {
         } else {
             console.warn('WebSocket is not connected.');
         }
-        console.log('Message sent!');
+        console.log('Message sent!', message);
     };
 
     return { ws, serverMessages, serverState, sendMessage };
