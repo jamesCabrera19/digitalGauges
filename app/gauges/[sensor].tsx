@@ -53,9 +53,10 @@ export default function SensorGauge() {
             command: 'update_ui',
             data: data,
             device_id: sensorID,
-            other: [],
+            // other: [],
         };
 
+        console.log(message);
         sendMessage(message);
 
         //todo
@@ -132,6 +133,11 @@ export default function SensorGauge() {
                             title="Save Data"
                             color={'blue'}
                             onPress={handleSaveData}
+                        />
+                        <Button
+                            title="Read Message"
+                            onPress={() => console.log(serverMessages)}
+                            color={'blue'}
                         />
                     </View>
                 </View>

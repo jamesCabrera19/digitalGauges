@@ -1,21 +1,12 @@
 import createDataContext from './index';
-// types
-// type Range = {
-//     min: number;
-//     max: number;
-// };
+
 type DangerZone = {
     min: number;
     max: number;
 };
-// type Colors = {
-//     backgroundColor: string;
-//     secondaryColor: string;
-//     fontColor: string;
-// };
+
 type State = {
     other: string;
-    // colors: Colors;
 
     backgroundColor: string;
     secondaryColor: string;
@@ -46,16 +37,11 @@ type Dispatch = (action: Action) => void;
 // Initial State
 const initialState: State = {
     other: 'other',
-    // colors: {
-    //     backgroundColor: '#000000',
-    //     secondaryColor: '#ffbf00',
-    //     fontColor: '#ffffff',
-    // },
+
     backgroundColor: '#000000',
     secondaryColor: '#ffbf00',
     fontColor: '#ffffff',
     style: 'normal',
-    // range: { min: 0, max: 250 },
     range: 250,
     //
     dangerZone: { min: 250, max: 300 },

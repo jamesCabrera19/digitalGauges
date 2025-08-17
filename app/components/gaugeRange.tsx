@@ -52,8 +52,6 @@ const GaugeRange = ({ updateRange, range, unit }: GaugeRangeProps) => {
         setState((prev) => ({ current, min, max }));
     }, [unit, range]);
 
-    console.log('range: ', range);
-
     return (
         <View style={styles.card}>
             <Text style={styles.label}>Danger Zone Limit</Text>

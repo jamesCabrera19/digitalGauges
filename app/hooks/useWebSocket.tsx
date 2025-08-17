@@ -5,7 +5,7 @@ export interface WebSocketPayload {
     command: string;
     data: string;
     device_id: string;
-    other: object;
+    // other: object;
 }
 
 export const useWebSocket = () => {
