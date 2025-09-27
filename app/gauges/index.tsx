@@ -6,12 +6,14 @@ import {
     StatusBar,
     Pressable,
     Button,
+    SafeAreaView,
 } from 'react-native';
 import { ReactNode, useContext, useState } from 'react';
 import { useRouter, Link } from 'expo-router';
 import { Context as DataContext } from '../context/dataContext';
+import { Context as SensorContext } from '../context/sensorContext';
 
-export const sensors = [
+const sensors = [
     {
         name: 'Coolant Temp',
         id: 123,
@@ -80,22 +82,28 @@ const Item = ({ name, val, route, status }: props) => (
 
 const SensorContainer = () => {
     const router = useRouter();
-    const { state } = useContext(DataContext);
-    const [active, setActive] = useState(false);
+    // const { state } = useContext(DataContext);
+    const { state: sensors, updateSensor } = useContext(SensorContext);
 
     const handleLongPress = (id: string) => {};
 
-    const addSensor = () => {
+    const handleAddSensor = () => {
         // enter IP? or scan for devices?
         // trigger a form and ask for this info
         // add name
         // unit preference
         // min max range
         // positon
+
+        // testing updateSensor function
+
+        // id: 123
+        // changes: {CoolantTemp}
+        updateSensor(123, { name: 'CoolantTemp' });
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View
                 style={{
                     display: 'flex',
@@ -105,10 +113,7 @@ const SensorContainer = () => {
                     padding: 10,
                 }}
             >
-                <Button
-                    title="Add +"
-                    onPress={() => console.log('Add sensor')}
-                />
+                <Button title="Add +" onPress={handleAddSensor} />
             </View>
 
             <FlatList
@@ -117,14 +122,14 @@ const SensorContainer = () => {
                     <Item
                         name={item.name}
                         val={item.value}
-                        route={() => router.push(`/gauges/${item.id}`)}
+                        route={() => router.push(`/gauges/${item.route}`)}
                         status={item.active}
                     />
                 )}
                 keyExtractor={(item) => item.id}
                 numColumns={2}
             />
-        </View>
+        </SafeAreaView>
     );
 };
 const styles = StyleSheet.create({

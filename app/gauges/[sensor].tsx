@@ -42,10 +42,10 @@ export default function SensorGauge() {
 
     const handleSaveData = () => {
         const data = JSON.stringify(state);
-        let targetSensorID;
+        let target;
         for (let i = 0; i < sensors.length; i++) {
             if (sensors[i].id === Number(sensorID)) {
-                targetSensorID = sensors[i];
+                target = sensors[i];
                 break;
             }
         }
@@ -56,7 +56,7 @@ export default function SensorGauge() {
             // other: [],
         };
 
-        console.log(message);
+        // console.log('target: ', target);
         sendMessage(message);
 
         //todo

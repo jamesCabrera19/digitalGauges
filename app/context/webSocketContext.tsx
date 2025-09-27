@@ -20,7 +20,7 @@ export const WebSocketContext = createContext<WebSocketContextType | null>(
 export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    const WS_ADDRESS = 'ws://172.20.10.4:80';
+    const WS_ADDRESS = 'ws://172.20.10.2:80';
 
     const [serverState, setServerState] = useState<string>('Disconnected');
     const [serverMessages, setServerMessages] = useState<string[]>([]);
