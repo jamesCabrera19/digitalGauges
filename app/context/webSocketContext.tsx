@@ -4,8 +4,8 @@ import React, {
     useState,
     useRef,
     ReactNode,
-} from "react";
-import { Text, View } from "react-native";
+} from 'react';
+import { Text, View } from 'react-native';
 
 interface WebSocketContextType {
     serverMessages: string[];
@@ -20,10 +20,9 @@ export const WebSocketContext = createContext<WebSocketContextType | null>(
 export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    // const WS_ADDRESS = "ws://192.168.1.111:80";// 172.20.10.2
-    const WS_ADDRESS = "ws://172.20.10:80"; // 172.20.10.2
+    const WS_ADDRESS = 'ws://172.20.10.2:80';
 
-    const [serverState, setServerState] = useState<string>("Disconnected");
+    const [serverState, setServerState] = useState<string>('Disconnected');
     const [serverMessages, setServerMessages] = useState<string[]>([]);
 
     const ws = useRef<WebSocket | null>(null);
@@ -32,16 +31,16 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         ws.current = new WebSocket(WS_ADDRESS);
 
         ws.current.onopen = () => {
-            setServerState("Connected to the server");
+            setServerState('Connected to the server');
         };
 
         ws.current.onclose = () => {
-            setServerState("Disconnected. Check internet or server.");
+            setServerState('Disconnected. Check internet or server.');
         };
 
         ws.current.onerror = (e) => {
-            console.error("WebSocket error:", e);
-            setServerState("An error occurred. Check the console for details.");
+            console.error('WebSocket error:', e);
+            setServerState('An error occurred. Check the console for details.');
         };
 
         ws.current.onmessage = (e) => {
@@ -58,7 +57,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
             value={{ serverMessages, serverState, ws: ws.current }}
         >
             <View style={{}}>
-                <Text style={{ textAlign: "center" }}>{serverState}</Text>
+                <Text style={{ textAlign: 'center' }}>{serverState}</Text>
             </View>
             {children}
         </WebSocketContext.Provider>
