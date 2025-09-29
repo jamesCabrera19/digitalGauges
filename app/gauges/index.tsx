@@ -7,42 +7,12 @@ import {
     Pressable,
     Button,
     SafeAreaView,
-} from 'react-native';
-import { ReactNode, useContext, useState } from 'react';
-import { useRouter, Link } from 'expo-router';
-import { Context as DataContext } from '../context/dataContext';
-import { Context as SensorContext } from '../context/sensorContext';
+} from "react-native";
+import { ReactNode, useContext, useState } from "react";
+import { useRouter, Link } from "expo-router";
+import { Context as DataContext } from "../context/dataContext";
+import { Context as SensorContext } from "../context/sensorContext";
 
-const sensors = [
-    {
-        name: 'Coolant Temp',
-        id: 123,
-        value: 180,
-        route: 'temp',
-        active: true,
-    },
-    {
-        name: 'Boost',
-        id: 1234,
-        value: 10.4,
-        route: 'boost',
-        active: false,
-    },
-    {
-        name: 'Oil Pressure',
-        id: 123456,
-        value: 42,
-        route: 'pressure',
-        active: false,
-    },
-    {
-        name: 'Brake Temp',
-        id: 123455556,
-        value: 250,
-        route: 'brake-temp',
-        active: true,
-    },
-];
 type props = {
     name: string;
     val: number;
@@ -54,14 +24,14 @@ const Item = ({ name, val, route, status }: props) => (
     <Pressable
         style={styles.item}
         onPress={() => route()}
-        onLongPress={() => console.log('Long pressed', name)}
+        onLongPress={() => console.log("Long pressed", name)}
     >
         {status ? (
             <View
                 style={{
                     height: 10,
                     width: 10,
-                    backgroundColor: 'yellow',
+                    backgroundColor: "yellow",
                     borderRadius: 5,
                 }}
             />
@@ -70,13 +40,13 @@ const Item = ({ name, val, route, status }: props) => (
                 style={{
                     height: 10,
                     width: 10,
-                    backgroundColor: 'red',
+                    backgroundColor: "red",
                     borderRadius: 5,
                 }}
             />
         )}
-        <Text style={{ fontSize: 20, color: 'white' }}>{name}</Text>
-        <Text style={{ fontSize: 50, color: 'white' }}>{val} </Text>
+        <Text style={{ fontSize: 20, color: "white" }}>{name}</Text>
+        <Text style={{ fontSize: 50, color: "white" }}>{val} </Text>
     </Pressable>
 );
 
@@ -99,16 +69,16 @@ const SensorContainer = () => {
 
         // id: 123
         // changes: {CoolantTemp}
-        updateSensor(123, { name: 'CoolantTemp' });
+        updateSensor(123, { name: "Coolant Temp" });
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <View
                 style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                     marginHorizontal: 10,
                     padding: 10,
                 }}
@@ -137,16 +107,16 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight || 20,
         width: 300,
         borderRadius: 10,
-        backgroundColor: '#292e34',
+        backgroundColor: "#292e34",
         height: 450,
     },
     item: {
-        backgroundColor: 'black',
+        backgroundColor: "black",
         margin: 8,
         flex: 1,
         height: 150,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: 8,
     },
     title: {
