@@ -6,38 +6,38 @@ import {
     StatusBar,
     Pressable,
     Button,
-} from 'react-native';
-import { ReactNode, useContext, useState } from 'react';
-import { useRouter, Link } from 'expo-router';
-import { Context as DataContext } from '../context/dataContext';
+} from "react-native";
+import { ReactNode, useContext, useState } from "react";
+import { useRouter, Link } from "expo-router";
+import { Context as DataContext } from "../context/dataContext";
 
 export const sensors = [
     {
-        name: 'Coolant Temp',
+        name: "Coolant Temp",
         id: 123,
         value: 180,
-        route: 'temp',
+        route: "temp",
         active: true,
     },
     {
-        name: 'Boost',
+        name: "Boost",
         id: 1234,
         value: 10.4,
-        route: 'boost',
+        route: "boost",
         active: false,
     },
     {
-        name: 'Oil Pressure',
+        name: "Oil Pressure",
         id: 123456,
         value: 42,
-        route: 'pressure',
+        route: "pressure",
         active: false,
     },
     {
-        name: 'Brake Temp',
+        name: "Brake Temp",
         id: 123455556,
         value: 250,
-        route: 'brake-temp',
+        route: "brake-temp",
         active: true,
     },
 ];
@@ -51,15 +51,15 @@ type props = {
 const Item = ({ name, val, route, status }: props) => (
     <Pressable
         style={styles.item}
-        onPress={() => route()}
-        onLongPress={() => console.log('Long pressed', name)}
+        onPress={route}
+        onLongPress={() => console.log("Long pressed", name)}
     >
         {status ? (
             <View
                 style={{
                     height: 10,
                     width: 10,
-                    backgroundColor: 'yellow',
+                    backgroundColor: "yellow",
                     borderRadius: 5,
                 }}
             />
@@ -68,20 +68,18 @@ const Item = ({ name, val, route, status }: props) => (
                 style={{
                     height: 10,
                     width: 10,
-                    backgroundColor: 'red',
+                    backgroundColor: "red",
                     borderRadius: 5,
                 }}
             />
         )}
-        <Text style={{ fontSize: 20, color: 'white' }}>{name}</Text>
-        <Text style={{ fontSize: 50, color: 'white' }}>{val} </Text>
+        <Text style={{ fontSize: 20, color: "white" }}>{name}</Text>
+        <Text style={{ fontSize: 50, color: "white" }}>{val} </Text>
     </Pressable>
 );
 
 const SensorContainer = () => {
     const router = useRouter();
-    const { state } = useContext(DataContext);
-    const [active, setActive] = useState(false);
 
     const handleLongPress = (id: string) => {};
 
@@ -98,16 +96,16 @@ const SensorContainer = () => {
         <View style={styles.container}>
             <View
                 style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                     marginHorizontal: 10,
                     padding: 10,
                 }}
             >
                 <Button
                     title="Add +"
-                    onPress={() => console.log('Add sensor')}
+                    onPress={() => console.log("Add sensor")}
                 />
             </View>
 
@@ -132,16 +130,16 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight || 20,
         width: 300,
         borderRadius: 10,
-        backgroundColor: '#292e34',
+        backgroundColor: "#292e34",
         height: 450,
     },
     item: {
-        backgroundColor: 'black',
+        backgroundColor: "black",
         margin: 8,
         flex: 1,
         height: 150,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: 8,
     },
     title: {
