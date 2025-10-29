@@ -30,7 +30,7 @@ const ArcGauge = ({
 }: gaugeProps) => {
     const [backgroundColor, secondaryColor, fontColor] = colors;
     // colors[1] is actually the font color. wee need to add an additional row of colors.
-
+    console.log(actualTemperature, temperatureProgress);
     return (
         <Gauge
             // cx={0}
@@ -48,7 +48,7 @@ const ArcGauge = ({
             // text={({ value, valueMax }) => `${value} / ${valueMax}`}
 
             // actual value
-            text={() => `${actualTemperature}°`}
+            text={() => `${Math.round(actualTemperature)}°`}
             sx={{
                 // background (reference) arc
                 [`& .${gaugeClasses.referenceArc}`]: {

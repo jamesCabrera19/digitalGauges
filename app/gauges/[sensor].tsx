@@ -1,19 +1,25 @@
-import { useContext } from "react";
-import { View, Button, StyleSheet, ScrollView } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useContext } from 'react';
+import {
+    View,
+    Button,
+    StyleSheet,
+    ScrollView,
+    SafeAreaView,
+} from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
-import { Context as DataContext } from "../context/dataContext";
-import { Context as SensorContext } from "../context/sensorContext";
+import { Context as DataContext } from '../context/dataContext';
+import { Context as SensorContext } from '../context/sensorContext';
 
 //
-import GaugeLabels from "../components/gaugeLabels";
-import Gauges from "../components/gauges";
-import GaugeStyle from "../components/gaugeStyle";
-import GaugeNeedle from "../components/gaugeNeedle";
-import GaugeRange from "../components/gaugeRange";
-import GaugeColorPicker from "../components/gaugeColorPicker";
+import GaugeLabels from '../components/gaugeLabels';
+import Gauges from '../components/gauges';
+import GaugeStyle from '../components/gaugeStyle';
+import GaugeNeedle from '../components/gaugeNeedle';
+import GaugeRange from '../components/gaugeRange';
+import GaugeColorPicker from '../components/gaugeColorPicker';
 
-import { useWebSocket, WebSocketPayload } from "../hooks/useWebSocket";
+import { useWebSocket, WebSocketPayload } from '../hooks/useWebSocket';
 
 export default function SensorGauge() {
     // extracting the route param
@@ -48,7 +54,7 @@ export default function SensorGauge() {
         }
 
         if (!target) {
-            console.warn("No sensor was found!");
+            console.warn('No sensor was found!');
             return;
         }
 
@@ -56,7 +62,7 @@ export default function SensorGauge() {
 
         // creating the message
         const message = {
-            command: "update_ui",
+            command: 'update_ui',
             data: data,
             device_id: target.id.toString(),
             // other: [],
@@ -66,111 +72,122 @@ export default function SensorGauge() {
         try {
             sendMessage(message);
         } catch (error) {
-            console.log("Message could not be sent. ", error);
+            console.log('Message could not be sent. ', error);
         }
     };
 
     return (
-        <ScrollView
-            contentContainerStyle={styles.scrollContent}
-            style={styles.screen}
-        >
-            <View style={styles.container}>
-                <Gauges
-                    needleSize={state.needleSize}
-                    gaugeType={state.gaugeType}
-                    unit={state.unit}
-                    colors={[
-                        state.backgroundColor,
-                        state.secondaryColor,
-                        state.fontColor,
-                    ]}
-                    range={state.range}
-                />
-
-                <GaugeStyle updateGaugeType={updateGaugeType} />
-
-                <GaugeNeedle
-                    updateNeedleSize={updateNeedleSize}
-                    active={state.gaugeType}
-                />
-
-                <GaugeColorPicker
-                    updateColor={updateData}
-                    colors={[
-                        state.backgroundColor,
-                        state.secondaryColor,
-                        state.fontColor,
-                    ]}
-                    gaugeFace={state.gaugeType}
-                />
-
-                <GaugeRange
-                    updateRange={updateRange}
-                    range={state.range}
-                    unit={state.unit}
-                />
-
-                <GaugeLabels
-                    updateUnit={(val) =>
-                        updateUnitDisplay(val.toUpperCase() as "C" | "F")
-                    }
-                />
-
-                <View style={styles.footer}>
-                    <Button title="Reset" color={"red"} onPress={handleReset} />
-
-                    <Button
-                        title="Save Data"
-                        color={"blue"}
-                        onPress={handleSaveData}
+        <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
+            <ScrollView
+                style={styles.screen}
+                contentContainerStyle={[
+                    styles.scrollContent,
+                    { minHeight: '100%', justifyContent: 'space-between' },
+                ]}
+                contentInsetAdjustmentBehavior="automatic"
+                keyboardShouldPersistTaps="handled"
+            >
+                <View style={styles.container}>
+                    <Gauges
+                        needleSize={state.needleSize}
+                        gaugeType={state.gaugeType}
+                        unit={state.unit}
+                        colors={[
+                            state.backgroundColor,
+                            state.secondaryColor,
+                            state.fontColor,
+                        ]}
+                        range={state.range}
                     />
-                    <Button
-                        title="Read Message"
-                        onPress={() => console.log(serverMessages)}
-                        color={"blue"}
+
+                    <GaugeStyle updateGaugeType={updateGaugeType} />
+
+                    <GaugeNeedle
+                        updateNeedleSize={updateNeedleSize}
+                        active={state.gaugeType}
                     />
+
+                    <GaugeColorPicker
+                        updateColor={updateData}
+                        colors={[
+                            state.backgroundColor,
+                            state.secondaryColor,
+                            state.fontColor,
+                        ]}
+                        gaugeFace={state.gaugeType}
+                    />
+
+                    <GaugeRange
+                        updateRange={updateRange}
+                        range={state.range}
+                        unit={state.unit}
+                    />
+
+                    <GaugeLabels
+                        updateUnit={(val) =>
+                            updateUnitDisplay(val.toUpperCase() as 'C' | 'F')
+                        }
+                    />
+
+                    <View style={styles.footer}>
+                        <Button
+                            title="Reset"
+                            color={'red'}
+                            onPress={handleReset}
+                        />
+
+                        <Button
+                            title="Save Data"
+                            color={'blue'}
+                            onPress={handleSaveData}
+                        />
+                        <Button
+                            title="Read Message"
+                            onPress={() => console.log(serverMessages)}
+                            color={'blue'}
+                        />
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1, // allows content to grow beyond the viewport
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: 16, // optional padding around your content
     },
     screen: {
         flex: 1,
-        backgroundColor: "#25292e",
+        backgroundColor: '#25292e',
     },
     container: {
         width: 350, // your fixed width
 
-        backgroundColor: "#292e34",
+        backgroundColor: '#292e34',
         borderRadius: 10,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         paddingBottom: 30,
     },
 
     card: {
         width: 300,
-        backgroundColor: "black",
+        backgroundColor: 'black',
         borderRadius: 10,
         padding: 10,
         margin: 10,
     },
     label: {
-        color: "white",
+        color: 'white',
     },
     footer: {
-        flexDirection: "row", // lay children out horizontally
-        justifyContent: "space-between", // distribute space evenly
-        alignItems: "center", // vertically center buttons
+        flexDirection: 'row', // lay children out horizontally
+        justifyContent: 'space-between', // distribute space evenly
+        alignItems: 'center', // vertically center buttons
         marginTop: 8, // a bit of breathing room under the text
         width: 300,
     },

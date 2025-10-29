@@ -29,7 +29,7 @@ const RoundGauge = ({
         <Gauge
             width={200}
             height={200}
-            value={temperature}
+            value={Math.round(temperature)}
             valueMin={0}
             valueMax={300}
             startAngle={-180} // must be match and opposite of endAngle
