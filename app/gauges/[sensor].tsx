@@ -9,7 +9,6 @@ import {
 import { useLocalSearchParams } from 'expo-router';
 
 import { Context as DataContext } from '../context/dataContext';
-import { Context as SensorContext } from '../context/sensorContext';
 
 //
 import GaugeLabels from '../components/gaugeLabels';
@@ -24,8 +23,10 @@ import { useWebSocket, WebSocketPayload } from '../hooks/useWebSocket';
 export default function SensorGauge() {
     // extracting the route param
     const { sensor: route } = useLocalSearchParams<{ sensor: string }>();
-    // websocket hook
-    const { ws, serverMessages, serverState, sendMessage } = useWebSocket();
+    // websocket hook//
+    //pulling sensors from the ws
+    const { ws, serverMessages, serverState, sendMessage, sensors } =
+        useWebSocket();
     //
     const {
         state,
@@ -35,15 +36,12 @@ export default function SensorGauge() {
         updateGaugeType,
         updateUnitDisplay,
         handleReset,
-        sendData,
     } = useContext(DataContext);
-
-    // sensor state list
-    const { state: sensors } = useContext(SensorContext);
 
     const handleSaveData = () => {
         // parsing the state
         const data = JSON.stringify(state);
+
         let target;
         // identifying the target
         for (let i = 0; i < sensors.length; i++) {
@@ -58,22 +56,16 @@ export default function SensorGauge() {
             return;
         }
 
-        // console.log(data);
-
         // creating the message
-        const message = {
-            command: 'update_ui',
+        const message: WebSocketPayload = {
+            // command: 'update_ui',
             data: data,
-            device_id: target.id.toString(),
-            // other: [],
+            target_id: target.id.toString(),
+            device_id: '_pwa_iphone_',
         };
-        // only send data if target is found
 
-        try {
-            sendMessage(message);
-        } catch (error) {
-            console.log('Message could not be sent. ', error);
-        }
+        // sending the message
+        sendMessage(message);
     };
 
     return (

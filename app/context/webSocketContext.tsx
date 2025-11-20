@@ -8,10 +8,74 @@ import React, {
 import { Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
+export const ROUTES = {
+    coolantTemperature: '/coolant_temperature',
+    boostPressure: '/boost_pressure',
+    oilPressure: '/oil_pressure',
+    brakeTemperature: '/brake_temperature',
+    server: '/server',
+} as const;
+
+type Route = (typeof ROUTES)[keyof typeof ROUTES];
+
+// we are replacing the sensorContext with SIMULATED data from the WebSocketProvider
+type Telemetry = {
+    name: string;
+    id: number;
+    value: number;
+    route: Route;
+    status: boolean;
+    unit?: string;
+};
+
+const INITIAL_SENSORS: Telemetry[] = [
+    {
+        name: 'Coolant Temp',
+        id: 123,
+        value: 180,
+        route: ROUTES.coolantTemperature,
+        status: true,
+        unit: '°C',
+    },
+    {
+        name: 'Boost',
+        id: 1234,
+        value: 10.4,
+        route: ROUTES.boostPressure,
+        status: false,
+        unit: 'psi',
+    },
+    {
+        name: 'Oil Pressure',
+        id: 123456,
+        value: 42,
+        route: ROUTES.oilPressure,
+        status: false,
+        unit: 'psi',
+    },
+    {
+        name: 'Brake Temp',
+        id: 123455556,
+        value: 250,
+        route: ROUTES.brakeTemperature,
+        status: true,
+        unit: '°C',
+    },
+    {
+        name: 'Server',
+        id: 99999999999,
+        value: 250,
+        route: ROUTES.brakeTemperature,
+        status: true,
+        unit: '°C',
+    },
+];
+
 interface WebSocketContextType {
     serverMessages: string[];
     serverState: string;
     ws: WebSocket | null;
+    sensors: Telemetry[]; // sensors
 }
 
 export const WebSocketContext = createContext<WebSocketContextType | null>(
@@ -21,8 +85,11 @@ export const WebSocketContext = createContext<WebSocketContextType | null>(
 export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    const WS_ADDRESS = 'ws://192.168.4.1:80';
+    const WS_ADDRESS = 'ws://192.168.4.1:81';
 
+    //
+    const [sensors, setSensors] = useState<Telemetry[]>(INITIAL_SENSORS);
+    //
     const [serverState, setServerState] = useState<string>('Disconnected');
     const [serverMessages, setServerMessages] = useState<string[]>([]);
     const [serverAddress, setServerAddress] = useState<string>(WS_ADDRESS);
@@ -48,6 +115,7 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
         ws.current.onmessage = (e) => {
             setServerMessages((prevMessages) => [...prevMessages, e.data]);
         };
+        // heres where we will update setSensors later on - the sensors will be coming from the ws
 
         return () => {
             ws.current?.close();
@@ -56,9 +124,9 @@ export const WebSocketProvider: React.FC<{ children: ReactNode }> = ({
 
     return (
         <WebSocketContext.Provider
-            value={{ serverMessages, serverState, ws: ws.current }}
+            value={{ serverMessages, serverState, ws: ws.current, sensors }}
         >
-            <View style={{}}>
+            <View>
                 <Text style={{ textAlign: 'center' }}>{serverState}</Text>
                 <TextInput
                     style={{
